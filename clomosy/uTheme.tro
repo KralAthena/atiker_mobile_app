@@ -1,0 +1,66 @@
+void BarGizle(AForm: TclForm);
+{
+  try
+    TclButton(AForm.clFindComponent('BtnGoBack')).Visible = False;
+    TclButton(AForm.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+  }
+}
+
+void AltinBtn(ABtn: TclProButton);
+{
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.FontSize = 15;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 14;
+  ABtn.clProSettings.RoundWidth = 14;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.clProSettings.BorderWidth = 0;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void KremBtn(ABtn: TclProButton);
+{
+  ABtn.Align = alMostTop;
+  ABtn.Height = 46;
+  ABtn.Margins.Top = 8;
+  ABtn.Margins.Left = 12;
+  ABtn.Margins.Right = 12;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontSize = 14;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 12;
+  ABtn.clProSettings.RoundWidth = 12;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e0c88a');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void KremPanel(APnl: TclProPanel);
+{
+  APnl.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  APnl.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e0c88a');
+  APnl.clProSettings.BorderWidth = 1;
+  APnl.clProSettings.IsFill = True;
+  APnl.clProSettings.IsRound = True;
+  APnl.clProSettings.RoundHeight = 16;
+  APnl.clProSettings.RoundWidth = 16;
+  APnl.SetclProSettings(APnl.clProSettings);
+}
+
+void YaziAyar(ALbl: TclProLabel; ARenk: String; ABoy: Integer);
+{
+  ALbl.clProSettings.FontColor = clAlphaColor.clHexToColor(ARenk);
+  ALbl.clProSettings.FontSize = ABoy;
+  ALbl.clProSettings.WordWrap = True;
+  ALbl.SetclProSettings(ALbl.clProSettings);
+}

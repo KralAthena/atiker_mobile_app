@@ -1,0 +1,115 @@
+var
+  frmLogin: TclForm;
+  edtEmail: TclEdit;
+  edtSifre: TclEdit;
+  btnGiris: TclButton;
+  lblBaslik: TclLabel;
+  lblAlt: TclLabel;
+  HttpRest: TclRest;
+  LastHttpCode: Integer;
+  mail: String;
+  sifre: String;
+  body: String;
+  cevap: String;
+  profil: String;
+  authUrl: String;
+  rtdbUrl: String;
+  idToken: String;
+  uid: String;
+
+void GirisTikla;
+{
+  mail = Trim(edtEmail.Text);
+  sifre = Trim(edtSifre.Text);
+
+  if (Pos('@', mail) == 0)
+    ShowMessage('E-posta okunamadi: [' + mail + ']')
+  else
+  {
+    body = '{"email":"' + mail + '","password":"' + sifre + '","returnSecureToken":true}';
+    HttpRest = TclRest.Create;
+    HttpRest.Accept = 'application/json';
+    HttpRest.ContentType = 'application/json';
+    HttpRest.ConnectTimeOut = 60000;
+    HttpRest.BaseURL = authUrl;
+    HttpRest.Method = rmPOST;
+    HttpRest.AddBody(body, 'application/json');
+    HttpRest.Execute;
+    LastHttpCode = HttpRest.StatusCode;
+    cevap = HttpRest.Response;
+
+    if (LastHttpCode <> 200)
+      ShowMessage('Giris olmadi. Kod: ' + IntToStr(LastHttpCode) + ' ' + cevap)
+    else
+    {
+      idToken = Clomosy.CLParseJSON(cevap, 'idToken');
+      uid = Clomosy.CLParseJSON(cevap, 'localId');
+      if (idToken == '')
+        ShowMessage('Token yok. Cevap: ' + cevap)
+      else
+      {
+        HttpRest = TclRest.Create;
+        HttpRest.Accept = 'application/json';
+        HttpRest.BaseURL = rtdbUrl + '/users/' + uid + '.json?auth=' + idToken;
+        HttpRest.Method = rmGET;
+        HttpRest.Execute;
+        profil = HttpRest.Response;
+        ShowMessage('Giris tamam. ' + Clomosy.CLParseJSON(profil, 'firstName') + ' / ' + Clomosy.CLParseJSON(profil, 'role'));
+      }
+    }
+  }
+}
+
+{
+  authUrl = 'FIREBASE_AUTH_LOGIN_URL';
+  rtdbUrl = 'FIREBASE_RTDB_URL';
+
+  frmLogin = TclForm.Create(Self);
+  frmLogin.SetFormColor('#faf4e4', '#f4ebd3', clGVertical);
+  frmLogin.clSetCaption('DeltaKPI');
+
+  lblBaslik = frmLogin.AddNewLabel(frmLogin, 'lblBaslik', 'DeltaKPI');
+  lblBaslik.Align = alMostTop;
+  lblBaslik.Height = 64;
+  lblBaslik.Margins.Left = 24;
+  lblBaslik.Margins.Top = 48;
+  lblBaslik.StyledSettings = ssFamily;
+  lblBaslik.TextSettings.Font.Size = 28;
+  lblBaslik.TextSettings.FontColor = clAlphaColor.clHexToColor('#c98a1b');
+
+  lblAlt = frmLogin.AddNewLabel(frmLogin, 'lblAlt', 'Akilli Performans ve Analiz');
+  lblAlt.Align = alMostTop;
+  lblAlt.Height = 28;
+  lblAlt.Margins.Left = 24;
+  lblAlt.StyledSettings = ssFamily;
+  lblAlt.TextSettings.Font.Size = 13;
+  lblAlt.TextSettings.FontColor = clAlphaColor.clHexToColor('#6b5a2e');
+
+  edtEmail = frmLogin.AddNewEdit(frmLogin, 'edtEmail', '');
+  edtEmail.Align = alMostTop;
+  edtEmail.Height = 52;
+  edtEmail.Margins.Left = 20;
+  edtEmail.Margins.Right = 20;
+  edtEmail.Margins.Top = 28;
+  edtEmail.clTypeOfField = taString;
+  edtEmail.Text = '';
+
+  edtSifre = frmLogin.AddNewEdit(frmLogin, 'edtSifre', '');
+  edtSifre.Align = alMostTop;
+  edtSifre.Password = True;
+  edtSifre.clTypeOfField = taString;
+  edtSifre.Height = 52;
+  edtSifre.Margins.Left = 20;
+  edtSifre.Margins.Right = 20;
+  edtSifre.Margins.Top = 10;
+
+  btnGiris = frmLogin.AddNewButton(frmLogin, 'btnGiris', 'Giris yap');
+  btnGiris.Align = alMostTop;
+  btnGiris.Height = 52;
+  btnGiris.Margins.Left = 20;
+  btnGiris.Margins.Right = 20;
+  btnGiris.Margins.Top = 24;
+  frmLogin.AddNewEvent(btnGiris, tbeOnClick, 'GirisTikla');
+
+  frmLogin.Run;
+}

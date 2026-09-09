@@ -1,0 +1,66 @@
+uses uHttp;
+
+var
+  frmUyari: TclForm;
+  lblBaslik: TclProLabel;
+  memoUyari: TclMemo;
+  btnGeri: TclProButton;
+
+void GeriDon;
+{
+  frmUyari.clHide;
+}
+
+{
+  frmUyari = TclForm.Create(Self);
+  frmUyari.SetFormColor('#faf4e4', '#f4ebd3', clGVertical);
+  frmUyari.clSetCaption('Uyarilar');
+
+  try
+    TclButton(frmUyari.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+    LastHttpCode = LastHttpCode;
+  }
+
+  lblBaslik = frmUyari.AddNewProLabel(frmUyari, 'lblBaslik', 'Uyarilar');
+  lblBaslik.Align = alMostTop;
+  lblBaslik.Height = 44;
+  lblBaslik.Margins.Left = 16;
+  lblBaslik.Margins.Top = 10;
+  lblBaslik.clProSettings.FontColor = clAlphaColor.clHexToColor('#c98a1b');
+  lblBaslik.clProSettings.FontSize = 22;
+  lblBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBaslik.SetclProSettings(lblBaslik.clProSettings);
+
+  btnGeri = frmUyari.AddNewProButton(frmUyari, 'btnGeri', 'Geri');
+  btnGeri.Align = alBottom;
+  btnGeri.Height = 48;
+  btnGeri.Margins.Left = 16;
+  btnGeri.Margins.Right = 16;
+  btnGeri.Margins.Bottom = 12;
+  btnGeri.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  btnGeri.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  btnGeri.clProSettings.FontSize = 15;
+  btnGeri.clProSettings.FontHorzAlign = palCenter;
+  btnGeri.clProSettings.FontVertAlign = palcenter;
+  btnGeri.clProSettings.TextSettings.Font.Style = [fsBold];
+  btnGeri.clProSettings.IsRound = True;
+  btnGeri.clProSettings.RoundHeight = 12;
+  btnGeri.clProSettings.RoundWidth = 12;
+  btnGeri.clProSettings.IsFill = True;
+  btnGeri.SetclProSettings(btnGeri.clProSettings);
+  frmUyari.AddNewEvent(btnGeri, tbeOnClick, 'GeriDon');
+
+  memoUyari = frmUyari.AddNewMemo(frmUyari, 'memoUyari', UyariListeMetin);
+  memoUyari.Align = alClient;
+  memoUyari.ReadOnly = True;
+  memoUyari.Margins.Left = 14;
+  memoUyari.Margins.Right = 14;
+  memoUyari.Margins.Top = 8;
+  memoUyari.Margins.Bottom = 8;
+  memoUyari.StyledSettings = ssFamily;
+  memoUyari.TextSettings.Font.Size = 14;
+  memoUyari.TextSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+
+  frmUyari.Run;
+}

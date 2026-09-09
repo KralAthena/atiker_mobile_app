@@ -1,0 +1,2517 @@
+var
+  GAuthLoginUrl: String;
+  GRtdbUrl: String;
+  GIdToken: String;
+  GUid: String;
+  GCompanyId: String;
+  GUserRole: String;
+  GUserName: String;
+  GCompanyName: String;
+  GYorum: String;
+  HttpRest: TclRest;
+  LastHttpCode: Integer;
+  frmLogin: TclForm;
+  edtEmail: TclProEdit;
+  edtSifre: TclProEdit;
+  btnGiris: TclProButton;
+  lblBaslik: TclProLabel;
+  lblAlt: TclProLabel;
+  pnlLogin: TclProPanel;
+  mail: String;
+  sifre: String;
+  body: String;
+  cevap: String;
+  profil: String;
+  frmDash: TclForm;
+  sideMenu: TclMenuFrame;
+  dashScroll: TclVertScrollBox;
+  pnlDashIcerik: TclProPanel;
+  layUst: TclLayout;
+  pnlAltNav: TclProPanel;
+  layAltNav: TclLayout;
+  btnMenu: TclProButton;
+  btnTabGenel: TclProButton;
+  btnTabKpi: TclProButton;
+  btnTabAnaliz: TclProButton;
+  btnTabUyari: TclProButton;
+  btnTabAksiyon: TclProButton;
+  btnTabRapor: TclProButton;
+  pnlBanner: TclProPanel;
+  lblBanner: TclProLabel;
+  btnNavDash: TclProButton;
+  btnNavKpi: TclProButton;
+  btnNavAnaliz: TclProButton;
+  btnNavUyari: TclProButton;
+  btnNavAksiyon: TclProButton;
+  btnNavRapor: TclProButton;
+  btnNavVeri: TclProButton;
+  btnNavAnomali: TclProButton;
+  btnNavTahmin: TclProButton;
+  btnNavExport: TclProButton;
+  btnNavYardim: TclProButton;
+  btnNavAyarlar: TclProButton;
+  btnNavDenetim: TclProButton;
+  btnNavCikis: TclProButton;
+  lblMenuUnvan: TclProLabel;
+  lblMenuUser: TclProLabel;
+  lblMenuFirma: TclProLabel;
+  lblMenuCanli: TclProLabel;
+  lblMenuGrupYon: TclProLabel;
+  lblMenuGrupAna: TclProLabel;
+  lblMerhaba: TclProLabel;
+  lblFirma: TclProLabel;
+  pnlCanliDurum: TclProPanel;
+  lblDurumChip: TclProLabel;
+  lblDurumAciklama: TclProLabel;
+  pnlBannerOzet: TclProPanel;
+  lblBannerOzet: TclProLabel;
+  lblBannerOzetAlt: TclProLabel;
+  pnlHero: TclProPanel;
+  btnHeroKpi: TclProButton;
+  btnHeroRisk: TclProButton;
+  btnHeroKritik: TclProButton;
+  pnlHizliLink: TclProPanel;
+  btnHizliVeri: TclProButton;
+  btnHizliAnomali: TclProButton;
+  btnHizliTahmin: TclProButton;
+  btnHizliAnaliz: TclProButton;
+  btnHizliAksiyon: TclProButton;
+  btnHizliRapor: TclProButton;
+  pnlHizliLink2: TclProPanel;
+  pnlWebNot: TclProPanel;
+  lblWebNot: TclProLabel;
+  pnlOzet: TclProPanel;
+  layMetrikKart: TclFlowLayout;
+  lblOzetBaslik: TclProLabel;
+  pnlYorum: TclProPanel;
+  lblYorumBaslik: TclProLabel;
+  lblYorumAlt: TclProLabel;
+  lblYorum: TclProLabel;
+  lblYorumChip: TclProLabel;
+  lblYorumMeta: TclProLabel;
+  btnYorumDetay: TclProButton;
+  pnlSonAktivite: TclProPanel;
+  lblSonAktiviteBaslik: TclProLabel;
+  lblSonAktivite: TclProLabel;
+  pnlPanelGrafik: TclProPanel;
+  lblPanelGrafikBaslik: TclProLabel;
+  chartPanelOzet: TclChart;
+  pnlKategoriGrafik: TclProPanel;
+  lblChartBaslik: TclProLabel;
+  chartKpi: TclChart;
+  pnlUyariGrafik: TclProPanel;
+  lblUyariGrafikBaslik: TclProLabel;
+  chartUyari: TclChart;
+  pnlAnomaliGrafik: TclProPanel;
+  lblAnomaliGrafikBaslik: TclProLabel;
+  chartAnomali: TclChart;
+  pnlDetay: TclProPanel;
+  pnlDetayUst: TclProPanel;
+  lblDetayBaslik: TclProLabel;
+  pnlMemoWrap: TclProPanel;
+  memoSayfa: TclMemo;
+  btnGeriSayfa: TclProButton;
+  lblLoginKartBaslik: TclProLabel;
+  lblLoginKartAlt: TclProLabel;
+  kpiJson: String;
+  chartJson: String;
+  alertJson: String;
+  entryJson: String;
+  analizJson: String;
+  actionJson: String;
+  reportJson: String;
+  anomalyJson: String;
+  auditJson: String;
+  GRaporBaslik: String;
+  nSatis: Integer;
+  nFinans: Integer;
+  nOperasyon: Integer;
+  nIk: Integer;
+  nPazarlama: Integer;
+  nUretim: Integer;
+  nMusteri: Integer;
+  nToplam: Integer;
+  nUyari: Integer;
+  nKayit: Integer;
+  nAksiyon: Integer;
+  nRapor: Integer;
+  nKritikUyari: Integer;
+  nRiskUyari: Integer;
+  nInfoUyari: Integer;
+  nAnomali: Integer;
+  nTahmin: Integer;
+  nDenetim: Integer;
+  btnYenile: TclProButton;
+  btnZil: TclProButton;
+  btnProfil: TclProButton;
+  pnlProfil: TclProPanel;
+  lblProfAd: TclProLabel;
+  lblProfRol: TclProLabel;
+  lblProfOzet: TclProLabel;
+  btnProfKapat: TclProButton;
+  btnProfKpi: TclProButton;
+  btnProfUyari: TclProButton;
+  btnProfBot: TclProButton;
+  btnNavBot: TclProButton;
+  edtBotMsg: TclProEdit;
+  btnBotGonder: TclProButton;
+  lblKartKpiV: TclProLabel;
+  lblKartUyariV: TclProLabel;
+  lblKartKayitV: TclProLabel;
+  lblKartAksiyonV: TclProLabel;
+  lblKartRaporV: TclProLabel;
+  GBotMetin: String;
+
+function MailOk(AMail: String): Integer;
+var
+  i: Integer;
+{
+  Result = 0;
+  i = 1;
+  while (i <= 80)
+  {
+    if (Copy(AMail, i, 1) == '@')
+      Result = 1;
+    i = i + 1;
+  }
+}
+
+function MetinSay(AMetin, AKalip: String; AUzun: Integer): Integer;
+var
+  n: Integer;
+  i: Integer;
+{
+  n = 0;
+  i = 1;
+  while (i <= 2500)
+  {
+    if (Copy(AMetin, i, AUzun) == AKalip)
+      n = n + 1;
+    i = i + 1;
+  }
+  Result = n;
+}
+
+function IlkAlan(AJson, AKalip: String; AUzun: Integer): String;
+var
+  i: Integer;
+  j: Integer;
+  ch: String;
+  isim: String;
+{
+  Result = '';
+  i = 1;
+  while (i <= 2500)
+  {
+    if (Copy(AJson, i, AUzun) == AKalip)
+    {
+      if (Result == '')
+      {
+        isim = '';
+        j = 1;
+        while (j <= 80)
+        {
+          ch = Copy(AJson, i + AUzun + j - 1, 1);
+          if (ch == '"')
+            j = 81
+          else
+            isim = isim + ch;
+          j = j + 1;
+        }
+        Result = isim;
+      }
+    }
+    i = i + 1;
+  }
+}
+
+function KisaMetin(AMetin: String; AUzun: Integer): String;
+{
+  Result = AMetin;
+  if (Copy(AMetin, AUzun + 1, 1) <> '')
+    Result = Copy(AMetin, 1, AUzun) + '...';
+}
+
+function AlanListesi(AJson, AKalip: String; AUzun: Integer): String;
+var
+  i: Integer;
+  j: Integer;
+  ch: String;
+  isim: String;
+  sonuc: String;
+{
+  sonuc = '';
+  i = 1;
+  while (i <= 2500)
+  {
+    if (Copy(AJson, i, AUzun) == AKalip)
+    {
+      isim = '';
+      j = 1;
+      while (j <= 140)
+      {
+        ch = Copy(AJson, i + AUzun + j - 1, 1);
+        if (ch == '"')
+          j = 141
+        else
+          isim = isim + ch;
+        j = j + 1;
+      }
+      if (sonuc == '')
+        sonuc = '- ' + isim
+      else
+        sonuc = sonuc + #13#10 + '- ' + isim;
+      i = i + AUzun;
+    }
+    i = i + 1;
+  }
+  Result = sonuc;
+}
+
+function RtdbGet(AYol: String): String;
+{
+  HttpRest = TclRest.Create;
+  HttpRest.Accept = 'application/json';
+  HttpRest.BaseURL = GRtdbUrl + '/' + AYol + '.json?auth=' + GIdToken;
+  HttpRest.Method = rmGET;
+  HttpRest.Execute;
+  Result = HttpRest.Response;
+}
+
+void CanliVeriYukle;
+var
+  firma: String;
+{
+  nSatis = 0;
+  nFinans = 0;
+  nOperasyon = 0;
+  nIk = 0;
+  nPazarlama = 0;
+  nUretim = 0;
+  nMusteri = 0;
+  nToplam = 0;
+  nUyari = 0;
+  nKayit = 0;
+  nAksiyon = 0;
+  nRapor = 0;
+  nKritikUyari = 0;
+  nRiskUyari = 0;
+  nInfoUyari = 0;
+  nAnomali = 0;
+  nTahmin = 0;
+  nDenetim = 0;
+  GYorum = '';
+  GRaporBaslik = '';
+  firma = RtdbGet('companies/' + GCompanyId);
+  GCompanyName = Clomosy.CLParseJSON(firma, 'name');
+  if (GCompanyName == '')
+    GCompanyName = GCompanyId;
+  kpiJson = RtdbGet('kpiDefinitions/' + GCompanyId);
+  alertJson = RtdbGet('alerts/' + GCompanyId);
+  entryJson = RtdbGet('kpiEntries/' + GCompanyId);
+  analizJson = RtdbGet('analysisResults/' + GCompanyId);
+  actionJson = RtdbGet('actionPlans/' + GCompanyId);
+  reportJson = RtdbGet('aiReports/' + GCompanyId);
+  anomalyJson = RtdbGet('anomalies/' + GCompanyId);
+  auditJson = RtdbGet('auditLogs/' + GCompanyId);
+  nSatis = MetinSay(kpiJson, '"category":"sales"', 18);
+  nFinans = MetinSay(kpiJson, '"category":"finance"', 20);
+  nOperasyon = MetinSay(kpiJson, '"category":"operations"', 23);
+  nIk = MetinSay(kpiJson, '"category":"hr"', 15);
+  nPazarlama = MetinSay(kpiJson, '"category":"marketing"', 22);
+  nUretim = MetinSay(kpiJson, '"category":"production"', 23);
+  nMusteri = MetinSay(kpiJson, '"category":"customer"', 21);
+  nToplam = nSatis + nFinans + nOperasyon + nIk + nPazarlama + nUretim + nMusteri;
+  nUyari = MetinSay(alertJson, '"title":"', 9);
+  nKayit = MetinSay(entryJson, '"period":"', 10);
+  nAksiyon = MetinSay(actionJson, '"title":"', 9);
+  nRapor = MetinSay(reportJson, '"title":"', 9);
+  nKritikUyari = MetinSay(alertJson, '"severity":"critical"', 21);
+  nRiskUyari = MetinSay(alertJson, '"severity":"risk"', 17) + MetinSay(alertJson, '"severity":"warning"', 20);
+  nInfoUyari = MetinSay(alertJson, '"severity":"info"', 17) + MetinSay(alertJson, '"severity":"success"', 20);
+  nAnomali = MetinSay(anomalyJson, '"description":"', 15);
+  nTahmin = MetinSay(analizJson, '"forecastReliable":true', 21);
+  if (nTahmin == 0)
+    nTahmin = MetinSay(analizJson, '"forecastValue":', 16);
+  nDenetim = MetinSay(auditJson, '"action":"', 10);
+  GYorum = IlkAlan(analizJson, '"executiveComment":"', 21);
+  GRaporBaslik = IlkAlan(reportJson, '"title":"', 9);
+  if (GYorum == '')
+    GYorum = 'Bugün için canlı analiz notu bulunmuyor. KPI verisi arttıkça bu alan yönetsel yorumlarla dolacak.';
+  if (GRaporBaslik == '')
+    GRaporBaslik = 'Hazır rapor henüz oluşmadı.';
+}
+
+void BarGizle(AForm: TclForm);
+{
+  try
+    TclButton(AForm.clFindComponent('BtnGoBack')).Visible = False;
+    TclButton(AForm.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+    LastHttpCode = 0;
+  }
+}
+
+void AltinBtn(ABtn: TclProButton);
+{
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.FontSize = 15;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 14;
+  ABtn.clProSettings.RoundWidth = 14;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.clProSettings.BorderWidth = 0;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void KremBtn(ABtn: TclProButton);
+{
+  ABtn.Align = alMostTop;
+  ABtn.Height = 48;
+  ABtn.Margins.Top = 6;
+  ABtn.Margins.Left = 12;
+  ABtn.Margins.Right = 12;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontSize = 14;
+  ABtn.clProSettings.FontHorzAlign = palLeading;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 12;
+  ABtn.clProSettings.RoundWidth = 12;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void KremPanel(APnl: TclProPanel);
+{
+  APnl.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  APnl.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  APnl.clProSettings.BorderWidth = 1;
+  APnl.clProSettings.IsFill = True;
+  APnl.clProSettings.IsRound = True;
+  APnl.clProSettings.RoundHeight = 18;
+  APnl.clProSettings.RoundWidth = 18;
+  APnl.SetclProSettings(APnl.clProSettings);
+}
+
+void YaziAyar(ALbl: TclProLabel; ARenk: String; ABoy: Integer);
+{
+  ALbl.clProSettings.FontColor = clAlphaColor.clHexToColor(ARenk);
+  ALbl.clProSettings.FontSize = ABoy;
+  ALbl.clProSettings.WordWrap = True;
+  ALbl.SetclProSettings(ALbl.clProSettings);
+}
+
+void LoginEditAyar(AEdit: TclProEdit);
+{
+  AEdit.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  AEdit.clProSettings.BorderWidth = 1;
+  AEdit.clProSettings.RoundHeight = 10;
+  AEdit.clProSettings.RoundWidth = 10;
+  AEdit.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fffdf8');
+  AEdit.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  AEdit.clProSettings.FontSize = 14;
+  AEdit.SetclProSettings(AEdit.clProSettings);
+}
+
+void MemoAyar(AMemo: TcProMemo);
+{
+  AMemo.Margins.Left = 24;
+  AMemo.Margins.Right = 20;
+  AMemo.Margins.Top = 16;
+  AMemo.Margins.Bottom = 14;
+  AMemo.ReadOnly = True;
+  try
+    AMemo.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+    AMemo.clProSettings.FontSize = 13;
+    AMemo.clProSettings.WordWrap = True;
+    AMemo.SetclProSettings(AMemo.clProSettings);
+  except
+    LastHttpCode = 0;
+  }
+}
+
+void MetrikKartEkle(AParent: TclFlowLayout; AName, ABaslik, ADeger, AGitEvent: String);
+var
+  kart: TclProPanel;
+  lblT: TclProLabel;
+  lblV: TclProLabel;
+{
+  kart = frmDash.AddNewProPanel(AParent, AName);
+  kart.Width = 158;
+  kart.Height = 96;
+  kart.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  kart.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  kart.clProSettings.BorderWidth = 1;
+  kart.clProSettings.IsFill = True;
+  kart.clProSettings.IsRound = True;
+  kart.clProSettings.RoundHeight = 14;
+  kart.clProSettings.RoundWidth = 14;
+  kart.SetclProSettings(kart.clProSettings);
+  if (AGitEvent <> '')
+    frmDash.AddNewEvent(kart, tbeOnClick, AGitEvent);
+
+  lblT = frmDash.AddNewProLabel(kart, AName + 'T', ABaslik);
+  lblT.Align = alMostTop;
+  lblT.Height = 28;
+  lblT.Margins.Left = 12;
+  lblT.Margins.Right = 8;
+  lblT.Margins.Top = 10;
+  YaziAyar(lblT, '#6b5a2e', 11);
+
+  lblV = frmDash.AddNewProLabel(kart, AName + 'V', ADeger);
+  lblV.Align = alClient;
+  lblV.Margins.Left = 12;
+  lblV.Margins.Right = 8;
+  lblV.Margins.Bottom = 10;
+  YaziAyar(lblV, '#2a2210', 28);
+  lblV.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblV.clProSettings.FontVertAlign = palcenter;
+  lblV.SetclProSettings(lblV.clProSettings);
+
+  if (AName == 'kartKpi')
+    lblKartKpiV = lblV;
+  if (AName == 'kartUyari')
+    lblKartUyariV = lblV;
+  if (AName == 'kartKayit')
+    lblKartKayitV = lblV;
+  if (AName == 'kartAksiyon')
+    lblKartAksiyonV = lblV;
+  if (AName == 'kartRapor')
+    lblKartRaporV = lblV;
+}
+
+void ChartDoldurEx(AChart: TclChart; ANSatis, ANFinans, ANOperasyon, ANIk, ANPazarlama, ANUretim, ANMusteri: Integer);
+var
+  chartJsonEx: String;
+{
+  chartJsonEx = '[';
+  if (ANSatis > 0)
+    chartJsonEx = chartJsonEx + '{"Ad":"Satis","Adet":' + IntToStr(ANSatis) + ',"color":"clGold"}';
+  if (ANFinans > 0)
+  {
+    if (chartJsonEx <> '[')
+      chartJsonEx = chartJsonEx + ',';
+    chartJsonEx = chartJsonEx + '{"Ad":"Finans","Adet":' + IntToStr(ANFinans) + ',"color":"clOrange"}';
+  }
+  if (ANOperasyon > 0)
+  {
+    if (chartJsonEx <> '[')
+      chartJsonEx = chartJsonEx + ',';
+    chartJsonEx = chartJsonEx + '{"Ad":"Operasyon","Adet":' + IntToStr(ANOperasyon) + ',"color":"clPeru"}';
+  }
+  if (ANIk > 0)
+  {
+    if (chartJsonEx <> '[')
+      chartJsonEx = chartJsonEx + ',';
+    chartJsonEx = chartJsonEx + '{"Ad":"IK","Adet":' + IntToStr(ANIk) + ',"color":"clTomato"}';
+  }
+  if (ANPazarlama > 0)
+  {
+    if (chartJsonEx <> '[')
+      chartJsonEx = chartJsonEx + ',';
+    chartJsonEx = chartJsonEx + '{"Ad":"Pazarlama","Adet":' + IntToStr(ANPazarlama) + ',"color":"clYellowGreen"}';
+  }
+  if (ANUretim > 0)
+  {
+    if (chartJsonEx <> '[')
+      chartJsonEx = chartJsonEx + ',';
+    chartJsonEx = chartJsonEx + '{"Ad":"Uretim","Adet":' + IntToStr(ANUretim) + ',"color":"clPurple"}';
+  }
+  if (ANMusteri > 0)
+  {
+    if (chartJsonEx <> '[')
+      chartJsonEx = chartJsonEx + ',';
+    chartJsonEx = chartJsonEx + '{"Ad":"Musteri","Adet":' + IntToStr(ANMusteri) + ',"color":"clPink"}';
+  }
+  chartJsonEx = chartJsonEx + ']';
+  if (chartJsonEx == '[]')
+    chartJsonEx = '[{"Ad":"KPI yok","Adet":0,"color":"clGold"}]';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'KPI';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'KPI dağılımı';
+  AChart.clLoadDataFromJSONStr(chartJsonEx);
+}
+
+void PanelOzetChartDoldurEx(AChart: TclChart; ANToplam, ANUyari, ANKayit: Integer);
+var
+  j: String;
+{
+  j = '[';
+  j = j + '{"Ad":"KPI","Adet":' + IntToStr(ANToplam) + ',"color":"clGold"},';
+  j = j + '{"Ad":"Uyari","Adet":' + IntToStr(ANUyari) + ',"color":"clTomato"},';
+  j = j + '{"Ad":"Kayit","Adet":' + IntToStr(ANKayit) + ',"color":"clSkyBlue"}]';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'Panel';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'Panel özeti';
+  AChart.clLoadDataFromJSONStr(j);
+}
+
+void UyariChartDoldurEx(AChart: TclChart; ANKritik, ANRisk, ANInfo: Integer);
+var
+  j: String;
+{
+  j = '[';
+  if (ANKritik > 0)
+    j = j + '{"Ad":"Kritik","Adet":' + IntToStr(ANKritik) + ',"color":"clTomato"}';
+  if (ANRisk > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Risk","Adet":' + IntToStr(ANRisk) + ',"color":"clOrange"}';
+  }
+  if (ANInfo > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Bilgi","Adet":' + IntToStr(ANInfo) + ',"color":"clSkyBlue"}';
+  }
+  if (j == '[')
+    j = '[{"Ad":"Kritik","Adet":0,"color":"clTomato"},{"Ad":"Risk","Adet":0,"color":"clOrange"},{"Ad":"Bilgi","Adet":0,"color":"clSkyBlue"}]'
+  else
+    j = j + ']';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'Uyarı';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'Uyarı dağılımı';
+  AChart.clLoadDataFromJSONStr(j);
+}
+
+void AnomaliChartDoldurEx(AChart: TclChart; ANAnomali, ANTahmin, ANUyari: Integer);
+var
+  j: String;
+{
+  j = '[';
+  j = j + '{"Ad":"Anomali","Adet":' + IntToStr(ANAnomali) + ',"color":"clTomato"},';
+  j = j + '{"Ad":"Tahmin","Adet":' + IntToStr(ANTahmin) + ',"color":"clOrange"},';
+  j = j + '{"Ad":"Uyari","Adet":' + IntToStr(ANUyari) + ',"color":"clGold"}]';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'Risk';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'Risk görünümü';
+  AChart.clLoadDataFromJSONStr(j);
+}
+
+function SonAktiviteMetni: String;
+var
+  uyari: String;
+  denetim: String;
+  aksiyon: String;
+{
+  uyari = AlanListesi(alertJson, '"title":"', 9);
+  denetim = AlanListesi(auditJson, '"action":"', 10);
+  aksiyon = AlanListesi(actionJson, '"title":"', 9);
+  if (uyari == '')
+    uyari = '- Açık uyarı yok';
+  if (denetim == '')
+    denetim = '- İşlem kaydı yok';
+  if (aksiyon == '')
+    aksiyon = '- Açık aksiyon yok';
+  Result = 'Uyarı akışı' + #13#10 + uyari + #13#10 + #13#10 +
+           'Aksiyonlar' + #13#10 + aksiyon + #13#10 + #13#10 +
+           'İşlem geçmişi' + #13#10 + denetim;
+}
+
+function DurumOnerisi: String;
+{
+  Result = 'Panel dengeli görünüyor. KPI, veri ve rapor akışını izlemeye devam et.';
+  if (nKritikUyari > 0)
+    Result = IntToStr(nKritikUyari) + ' kritik uyarı var. Önce uyarı ve aksiyon planlarını kapat.';
+  if (nKritikUyari == 0)
+  {
+    if (nAnomali > 0)
+      Result = IntToStr(nAnomali) + ' anomali tespit edildi. Analiz ve tahmin merkezini kontrol et.';
+    if (nAnomali == 0)
+    {
+      if (nRiskUyari > 0)
+        Result = IntToStr(nRiskUyari) + ' risk seviyesinde uyarı var. KPI sapmalarını takip et.';
+    }
+  }
+}
+
+function GenelBakisMetni(AGYorum, ARaporBaslik: String; ANToplam, ANUyari, ANKayit, ANAksiyon, ANRapor: Integer): String;
+{
+  Result = 'Özet' + #13#10 + #13#10 +
+           '- KPI: ' + IntToStr(ANToplam) + #13#10 +
+           '- Uyarı: ' + IntToStr(ANUyari) + #13#10 +
+           '- Kayıt: ' + IntToStr(ANKayit) + #13#10 +
+           '- Aksiyon: ' + IntToStr(ANAksiyon) + #13#10 +
+           '- Rapor: ' + IntToStr(ANRapor) + #13#10 +
+           '- Anomali: ' + IntToStr(nAnomali) + #13#10 +
+           '- Tahmin: ' + IntToStr(nTahmin) + #13#10 + #13#10 +
+           'Not' + #13#10 + #13#10 + AGYorum + #13#10 + #13#10 +
+           'Rapor' + #13#10 + #13#10 + ARaporBaslik + #13#10 + #13#10 +
+           'Odak' + #13#10 + #13#10 +
+           'Satış, uyarı, aksiyon ve AI rapor akışını tek panelden izle.';
+}
+
+function KpiYonetimiMetni(AMetin: String; ANSatis, ANFinans, ANOperasyon, ANIk, ANPazarlama, ANUretim, ANMusteri: Integer): String;
+{
+  Result = 'Aktif KPI görünümü' + #13#10 + #13#10 +
+           'Kategori özeti' + #13#10 + #13#10 +
+           '- Satış: ' + IntToStr(ANSatis) + #13#10 +
+           '- Finans: ' + IntToStr(ANFinans) + #13#10 +
+           '- Operasyon: ' + IntToStr(ANOperasyon) + #13#10 +
+           '- İK: ' + IntToStr(ANIk) + #13#10 +
+           '- Pazarlama: ' + IntToStr(ANPazarlama) + #13#10 +
+           '- Üretim: ' + IntToStr(ANUretim) + #13#10 +
+           '- Müşteri: ' + IntToStr(ANMusteri) + #13#10 + #13#10 +
+           'İzleme notu' + #13#10 + #13#10 +
+           'Önce satış ve operasyon KPI''larını gözden geçir.' + #13#10 + #13#10 +
+           'Aktif KPI listesi' + #13#10 + #13#10 + AMetin;
+}
+
+function AnalizMetni(AMetin, ARaporBaslik: String; ANKritik, ANRisk, ANInfo, ANRapor: Integer): String;
+{
+  Result = 'Analiz özeti' + #13#10 + #13#10 +
+           'Anlık durum' + #13#10 + #13#10 +
+           '- Kritik uyarı: ' + IntToStr(ANKritik) + #13#10 +
+           '- Risk seviyesi: ' + IntToStr(ANRisk) + #13#10 +
+           '- Bilgi notu: ' + IntToStr(ANInfo) + #13#10 +
+           '- Hazır rapor: ' + IntToStr(ANRapor) + #13#10 + #13#10 +
+           'Son rapor' + #13#10 + #13#10 + ARaporBaslik + #13#10 + #13#10 +
+           'Yorum yönü' + #13#10 + #13#10 +
+           'Öncelik kritik sapma, sonra risk ve bilgi notları.' + #13#10 + #13#10 +
+           'Yorum akışı' + #13#10 + #13#10 + AMetin;
+}
+
+function UyariMetni(AMetin: String; ANKritik, ANRisk, ANInfo, ANAksiyon: Integer): String;
+{
+  Result = 'Uyarı özeti' + #13#10 + #13#10 +
+           'Uyarı dağılımı' + #13#10 + #13#10 +
+           '- Kritik: ' + IntToStr(ANKritik) + #13#10 +
+           '- Risk: ' + IntToStr(ANRisk) + #13#10 +
+           '- Bilgi: ' + IntToStr(ANInfo) + #13#10 +
+           '- Açık aksiyon: ' + IntToStr(ANAksiyon) + #13#10 + #13#10 +
+           'Aksiyon odağı' + #13#10 + #13#10 +
+           'Açık başlıkları aksiyon planlarıyla birlikte takip et.' + #13#10 + #13#10 +
+           'Açık başlıklar' + #13#10 + #13#10 + AMetin;
+}
+
+function AksiyonMetni(AMetin: String; ANAksiyon, ANUyari: Integer): String;
+{
+  Result = 'Aksiyon planları' + #13#10 + #13#10 +
+           'Durum' + #13#10 + #13#10 +
+           '- Açık aksiyon: ' + IntToStr(ANAksiyon) + #13#10 +
+           '- İlişkili uyarı: ' + IntToStr(ANUyari) + #13#10 + #13#10 +
+           'Öncelik' + #13#10 + #13#10 +
+           'Satış sapmaları ve operasyon riskleri önce kapanmalı.' + #13#10 + #13#10 +
+           'Aksiyon listesi' + #13#10 + #13#10 + AMetin;
+}
+
+function RaporMetni(AMetin, ARaporBaslik: String; ANRapor, ANAksiyon: Integer): String;
+{
+  Result = 'AI yönetici raporları' + #13#10 + #13#10 +
+           'Rapor özeti' + #13#10 + #13#10 +
+           '- Hazır rapor: ' + IntToStr(ANRapor) + #13#10 +
+           '- Besleyen aksiyon: ' + IntToStr(ANAksiyon) + #13#10 + #13#10 +
+           'Son rapor' + #13#10 + #13#10 + ARaporBaslik + #13#10 + #13#10 +
+           'Rapor akışı' + #13#10 + #13#10 + AMetin;
+}
+
+function RolDashboardGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+  if (GUserRole == 'analyst')
+    Result = 1;
+  if (GUserRole == 'viewer')
+    Result = 1;
+}
+
+function RolKpiGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+  if (GUserRole == 'analyst')
+    Result = 1;
+}
+
+function RolAnalizGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+  if (GUserRole == 'analyst')
+    Result = 1;
+}
+
+function RolUyariGorebilir: Integer;
+{
+  Result = RolDashboardGorebilir;
+}
+
+function RolAksiyonGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+}
+
+function RolRaporGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+  if (GUserRole == 'analyst')
+    Result = 1;
+}
+
+function RolVeriGorebilir: Integer;
+{
+  Result = RolKpiGorebilir;
+}
+
+function RolAnomaliGorebilir: Integer;
+{
+  Result = RolAnalizGorebilir;
+}
+
+function RolTahminGorebilir: Integer;
+{
+  Result = RolAnalizGorebilir;
+}
+
+function RolExportGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+  if (GUserRole == 'analyst')
+    Result = 1;
+  if (GUserRole == 'viewer')
+    Result = 1;
+}
+
+function RolYardimGorebilir: Integer;
+{
+  Result = RolDashboardGorebilir;
+}
+
+function RolAyarlarGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+}
+
+function RolDenetimGorebilir: Integer;
+{
+  Result = 0;
+  if (GUserRole == 'company_admin')
+    Result = 1;
+  if (GUserRole == 'admin')
+    Result = 1;
+  if (GUserRole == 'manager')
+    Result = 1;
+  if (GUserRole == 'analyst')
+    Result = 1;
+}
+
+function AyarlarMetni: String;
+{
+  Result = 'Ayarlar ve hesap' + #13#10 + #13#10 +
+           'Firma: ' + GCompanyName + #13#10 +
+           'Kullanıcı: ' + GUserName + #13#10 +
+           'Rol: ' + GUserRole + #13#10 +
+           'Firma kodu: ' + GCompanyId + #13#10 + #13#10 +
+           'Mobil özet görünüm' + #13#10 + #13#10 +
+           '- KPI tanımı: ' + IntToStr(nToplam) + #13#10 +
+           '- Veri kaydı: ' + IntToStr(nKayit) + #13#10 +
+           '- Ekip ve detaylı ayarlar web panelden yönetilir.';
+}
+
+function DenetimMetni(AMetin: String; ANDenetim: Integer): String;
+{
+  Result = 'İşlem geçmişi' + #13#10 + #13#10 +
+           'Kayıtlı işlem: ' + IntToStr(ANDenetim) + #13#10 + #13#10 +
+           'Son işlemler' + #13#10 + #13#10 + AMetin;
+}
+
+function VeriMetni(AMetin: String; ANKayit: Integer): String;
+{
+  Result = 'Veri girişi özeti' + #13#10 + #13#10 +
+           'Toplam kayıt: ' + IntToStr(ANKayit) + #13#10 + #13#10 +
+           'Son dönem kayıtları' + #13#10 + #13#10 + AMetin;
+}
+
+function AnomaliMetni(AMetin: String; ANAnomali, ANKritik: Integer): String;
+{
+  Result = 'Anomali merkezi' + #13#10 + #13#10 +
+           'Tespit edilen anomali: ' + IntToStr(ANAnomali) + #13#10 +
+           'Kritik uyarı: ' + IntToStr(ANKritik) + #13#10 + #13#10 +
+           'Anomali listesi' + #13#10 + #13#10 + AMetin;
+}
+
+function TahminMetni(AMetin: String; ANTahmin, ANToplam: Integer): String;
+{
+  Result = 'Tahmin merkezi' + #13#10 + #13#10 +
+           'Güvenilir tahmin: ' + IntToStr(ANTahmin) + #13#10 +
+           'Takip edilen KPI: ' + IntToStr(ANToplam) + #13#10 + #13#10 +
+           'Analiz notları' + #13#10 + #13#10 + AMetin;
+}
+
+function ExportMetni(AMetin: String; ANKayit, ANUyari, ANAksiyon: Integer): String;
+{
+  Result = 'Raporlar ve dışa aktarım' + #13#10 + #13#10 +
+           'Mobilde özet görünüm' + #13#10 + #13#10 +
+           '- KPI kaydı: ' + IntToStr(ANKayit) + #13#10 +
+           '- Uyarı: ' + IntToStr(ANUyari) + #13#10 +
+           '- Aksiyon: ' + IntToStr(ANAksiyon) + #13#10 + #13#10 +
+           'Web panelden CSV, Excel, PDF dışa aktarım yapılır.' + #13#10 + #13#10 +
+           'Rapor başlıkları' + #13#10 + #13#10 + AMetin;
+}
+
+function YardimMetni: String;
+{
+  Result = 'Yardım ve destek' + #13#10 + #13#10 +
+           'DeltaKPI mobil panel' + #13#10 + #13#10 +
+           '- Ana sayfa: canlı KPI, uyarı ve rapor özeti' + #13#10 +
+           '- Alt menü: KPI, analiz, uyarı, aksiyon, AI rapor' + #13#10 +
+           '- Yan menü: veri, anomali, tahmin, raporlar' + #13#10 +
+           '- 🔄 yenile, 🔔 uyarı, 👤 profil' + #13#10 + #13#10 +
+           'Detaylı işlemler için web paneli kullanın.';
+}
+
+void AltNavBtnAyar(ABtn: TclProButton);
+{
+  ABtn.Align = alLeft;
+  ABtn.Width = 48;
+  ABtn.Margins.Left = 1;
+  ABtn.Margins.Right = 1;
+  ABtn.Margins.Top = 8;
+  ABtn.Margins.Bottom = 6;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#6b5a2e');
+  ABtn.clProSettings.FontSize = 15;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 10;
+  ABtn.clProSettings.RoundWidth = 10;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void MiniUstBtnAyar(ABtn: TclProButton);
+{
+  ABtn.Align = alNone;
+  ABtn.Left = 14;
+  ABtn.Top = 10;
+  ABtn.Width = 28;
+  ABtn.Height = 28;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.FontSize = 10;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 7;
+  ABtn.clProSettings.RoundWidth = 7;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.clProSettings.BorderWidth = 0;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void AltNavSecili(ABtn: TclProButton);
+{
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.RoundHeight = 14;
+  ABtn.clProSettings.RoundWidth = 14;
+  ABtn.clProSettings.BorderWidth = 0;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void AltNavPasif(ABtn: TclProButton);
+{
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e0c88a');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void AltNavGuncelle(ASecim: String);
+{
+  AltNavPasif(btnTabGenel);
+  AltNavPasif(btnTabKpi);
+  AltNavPasif(btnTabAnaliz);
+  AltNavPasif(btnTabUyari);
+  AltNavPasif(btnTabAksiyon);
+  AltNavPasif(btnTabRapor);
+
+  if (ASecim == 'GENEL')
+    AltNavSecili(btnTabGenel);
+  if (ASecim == 'KPI')
+    AltNavSecili(btnTabKpi);
+  if (ASecim == 'ANALIZ')
+    AltNavSecili(btnTabAnaliz);
+  if (ASecim == 'UYARI')
+    AltNavSecili(btnTabUyari);
+  if (ASecim == 'AKSIYON')
+    AltNavSecili(btnTabAksiyon);
+  if (ASecim == 'RAPOR')
+    AltNavSecili(btnTabRapor);
+}
+
+void UstBarBtn(ABtn: TclProButton; AText: String);
+{
+  ABtn.Align = alRight;
+  ABtn.Width = 40;
+  ABtn.Height = 40;
+  ABtn.Margins.Top = 8;
+  ABtn.Margins.Bottom = 8;
+  ABtn.Margins.Right = 4;
+  ABtn.Text = AText;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fffdf8');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontSize = 18;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 12;
+  ABtn.clProSettings.RoundWidth = 12;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void MenuBarBtn(ABtn: TclProButton; AText: String);
+{
+  ABtn.Align = alLeft;
+  ABtn.Width = 42;
+  ABtn.Height = 40;
+  ABtn.Margins.Top = 8;
+  ABtn.Margins.Bottom = 8;
+  ABtn.Text = AText;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fffdf8');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontSize = 18;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 12;
+  ABtn.clProSettings.RoundWidth = 12;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void HeroBtnAyar(ABtn: TclProButton; AMetinRenk, AArkaRenk: String);
+{
+  ABtn.Align = alLeft;
+  ABtn.Width = 102;
+  ABtn.Height = 52;
+  ABtn.Margins.Left = 4;
+  ABtn.Margins.Top = 4;
+  ABtn.Margins.Bottom = 8;
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor(AMetinRenk);
+  ABtn.clProSettings.FontSize = 12;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor(AArkaRenk);
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 12;
+  ABtn.clProSettings.RoundWidth = 12;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void HizliLinkBtn(ABtn: TclProButton);
+{
+  ABtn.Align = alLeft;
+  ABtn.Width = 96;
+  ABtn.Height = 36;
+  ABtn.Margins.Left = 5;
+  ABtn.Margins.Top = 6;
+  ABtn.Margins.Bottom = 6;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontSize = 11;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 10;
+  ABtn.clProSettings.RoundWidth = 10;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void BannerOzetGuncelle;
+{
+  lblBannerOzet.Text = 'Canlı panel özeti';
+  lblBannerOzetAlt.Text = IntToStr(nToplam) + ' KPI  |  ' + IntToStr(nUyari) + ' uyarı  |  ' + IntToStr(nAnomali) + ' anomali';
+  btnHeroKpi.Text = 'KPI' + #13#10 + IntToStr(nToplam);
+  btnHeroRisk.Text = 'Risk' + #13#10 + IntToStr(nRiskUyari + nKritikUyari);
+  btnHeroKritik.Text = 'Kritik' + #13#10 + IntToStr(nKritikUyari);
+}
+
+void DurumGuncelle;
+{
+  lblDurumAciklama.Text = DurumOnerisi;
+  if (nKritikUyari > 0)
+  {
+    lblDurumChip.Text = 'KRITIK';
+    lblDurumChip.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffe8e8');
+    lblDurumChip.clProSettings.FontColor = clAlphaColor.clHexToColor('#8b1a1a');
+  }
+  else
+  {
+    if (nAnomali > 0)
+    {
+      lblDurumChip.Text = 'DIKKAT';
+      lblDurumChip.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff2cc');
+      lblDurumChip.clProSettings.FontColor = clAlphaColor.clHexToColor('#b36a00');
+    }
+    else
+    {
+      if (nRiskUyari > 0)
+      {
+        lblDurumChip.Text = 'DIKKAT';
+        lblDurumChip.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff2cc');
+        lblDurumChip.clProSettings.FontColor = clAlphaColor.clHexToColor('#b36a00');
+      }
+      else
+      {
+        lblDurumChip.Text = 'STABIL';
+        lblDurumChip.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#e8f5e9');
+        lblDurumChip.clProSettings.FontColor = clAlphaColor.clHexToColor('#2e7d32');
+      }
+    }
+  }
+  lblDurumChip.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblDurumChip.clProSettings.FontHorzAlign = palCenter;
+  lblDurumChip.clProSettings.FontVertAlign = palcenter;
+  lblDurumChip.SetclProSettings(lblDurumChip.clProSettings);
+}
+
+void MenuOzetGuncelle;
+{
+  lblMenuFirma.Text = GCompanyName;
+  lblMenuCanli.Text = IntToStr(nUyari) + ' uyarı  |  ' + IntToStr(nAnomali) + ' anomali  |  ' + IntToStr(nRapor) + ' rapor';
+  lblWebNot.Text = 'Web panel: analiz çalıştır, AI rapor üret, CSV/PDF dışa aktar. Mobilde canlı özet ve takip.';
+}
+
+void ZilYaziGuncelle;
+{
+  if (nUyari > 0)
+  {
+    btnZil.Text = '🔔' + #13#10 + IntToStr(nUyari);
+    btnZil.clProSettings.FontSize = 11;
+  }
+  else
+  {
+    btnZil.Text = '🔔';
+    btnZil.clProSettings.FontSize = 18;
+  }
+  btnZil.SetclProSettings(btnZil.clProSettings);
+}
+
+void SonAktiviteGuncelle;
+{
+  lblSonAktivite.Text = SonAktiviteMetni;
+}
+
+void DashUsteDon;
+{
+  try
+    clRTMethod(lblMerhaba, 'SetFocus');
+  except
+    LastHttpCode = 0;
+  }
+}
+
+void DashGuncelle;
+{
+  CanliVeriYukle;
+  lblMerhaba.Text = 'Merhaba ' + GUserName;
+  lblFirma.Text = GCompanyName + '  |  ' + GUserRole;
+  lblMenuUser.Text = GUserName;
+  lblYorum.Text = GYorum;
+  lblYorumAlt.Text = 'Son rapor: ' + GRaporBaslik;
+  lblYorumMeta.Text = 'Anomali: ' + IntToStr(nAnomali) + '  |  Tahmin: ' + IntToStr(nTahmin) + '  |  Rapor: ' + IntToStr(nRapor);
+  lblKartKpiV.Text = IntToStr(nToplam);
+  lblKartUyariV.Text = IntToStr(nUyari);
+  lblKartKayitV.Text = IntToStr(nKayit);
+  lblKartAksiyonV.Text = IntToStr(nAksiyon);
+  lblKartRaporV.Text = IntToStr(nRapor);
+  ChartDoldurEx(chartKpi, nSatis, nFinans, nOperasyon, nIk, nPazarlama, nUretim, nMusteri);
+  PanelOzetChartDoldurEx(chartPanelOzet, nToplam, nUyari, nKayit);
+  UyariChartDoldurEx(chartUyari, nKritikUyari, nRiskUyari, nInfoUyari);
+  AnomaliChartDoldurEx(chartAnomali, nAnomali, nTahmin, nUyari);
+  BannerOzetGuncelle;
+  DurumGuncelle;
+  SonAktiviteGuncelle;
+  MenuOzetGuncelle;
+  ZilYaziGuncelle;
+}
+
+void MenuKapat;
+{
+  sideMenu.Visible = False;
+  clRTMethod(btnMenu, 'BringTofront');
+}
+
+void MenuAc;
+{
+  sideMenu.Visible = True;
+  clRTMethod(sideMenu, 'BringTofront');
+}
+
+void YenileTikla;
+{
+  DashGuncelle;
+}
+
+void ProfilAc;
+{
+  MenuKapat;
+  lblProfAd.Text = GUserName;
+  lblProfRol.Text = GUserRole;
+  lblProfOzet.Text = GCompanyName + #13#10 + #13#10 +
+                     'Durum: ' + lblDurumChip.Text + #13#10 +
+                     'KPI: ' + IntToStr(nToplam) + '  |  Uyarı: ' + IntToStr(nUyari) + #13#10 +
+                     'Anomali: ' + IntToStr(nAnomali) + '  |  Tahmin: ' + IntToStr(nTahmin) + #13#10 +
+                     'Kayıt: ' + IntToStr(nKayit) + '  |  Rapor: ' + IntToStr(nRapor);
+  pnlProfil.Visible = True;
+  clRTMethod(pnlProfil, 'BringTofront');
+}
+
+void ProfilKapat;
+{
+  pnlProfil.Visible = False;
+}
+
+void BotCevap(ASoru: String);
+var
+  c: String;
+  q: String;
+{
+  q = LowerCase(ASoru);
+  c = 'KPI, uyari, analiz, rapor ve aksiyon sayfalarina alt menuden gecebilirsin.';
+  if (Copy(q, 1, 3) == 'kpi')
+    c = IntToStr(nToplam) + ' KPI tanimi var. Satis: ' + IntToStr(nSatis) + ', Finans: ' + IntToStr(nFinans) + '.';
+  if (Copy(q, 1, 4) == 'uyar')
+    c = IntToStr(nUyari) + ' uyari acik. Kritik: ' + IntToStr(nKritikUyari) + ', Risk: ' + IntToStr(nRiskUyari) + '.';
+  if (Copy(q, 1, 5) == 'rapor')
+    c = IntToStr(nRapor) + ' hazir rapor. Son baslik: ' + KisaMetin(GRaporBaslik, 42);
+  if (Copy(q, 1, 4) == 'anal')
+    c = 'Analiz notu: ' + KisaMetin(GYorum, 72);
+  if (Copy(q, 1, 4) == 'merh')
+    c = 'Merhaba ' + GUserName + '. DeltaKPI asistanindayim.';
+  if (Copy(q, 1, 4) == 'yard')
+    c = YardimMetni;
+  if (Copy(q, 1, 5) == 'anoma')
+    c = IntToStr(nAnomali) + ' anomali tespit edildi. Kritik uyari: ' + IntToStr(nKritikUyari) + '.';
+  if (Copy(q, 1, 5) == 'tahmi')
+    c = IntToStr(nTahmin) + ' guvenilir tahmin var. Toplam KPI: ' + IntToStr(nToplam) + '.';
+  if (Copy(q, 1, 4) == 'durum')
+    c = DurumOnerisi;
+  if (Copy(q, 1, 4) == 'ayar')
+    c = AyarlarMetni;
+  if (Copy(q, 1, 4) == 'denet')
+    c = DenetimMetni(AlanListesi(auditJson, '"action":"', 10), nDenetim);
+  GBotMetin = GBotMetin + #13#10 + 'Sen: ' + ASoru + #13#10 + 'Bot: ' + c;
+  memoSayfa.Lines.Text = GBotMetin;
+}
+
+void BotGonderTikla;
+{
+  if (Trim(edtBotMsg.Text) == '')
+    ShowMessage('Bir soru yaz. Ornek: kpi, uyari, rapor')
+  else
+  {
+    BotCevap(edtBotMsg.Text);
+    edtBotMsg.Text = '';
+  }
+}
+
+void BotGit;
+{
+  MenuKapat;
+  pnlDashIcerik.Visible = False;
+  lblDetayBaslik.Text = 'DeltaKPI Asistan';
+  GBotMetin = 'Merhaba ' + GUserName + '.' + #13#10 +
+              'Canli ozet sorulari sorabilirsin.' + #13#10 +
+              'Ornek: kpi, uyari, rapor, analiz, durum, yardim';
+  memoSayfa.Lines.Text = GBotMetin;
+  pnlDetay.Visible = True;
+  memoSayfa.Visible = True;
+  btnGeriSayfa.Visible = True;
+  edtBotMsg.Visible = True;
+  btnBotGonder.Visible = True;
+  clRTMethod(pnlDetay, 'BringTofront');
+}
+
+void CikisYap;
+{
+  MenuKapat;
+  frmDash.clHide;
+  frmLogin.clShow;
+}
+
+void AnaEkran;
+{
+  MenuKapat;
+  ProfilKapat;
+  pnlDetay.Visible = False;
+  memoSayfa.Visible = False;
+  btnGeriSayfa.Visible = False;
+  edtBotMsg.Visible = False;
+  btnBotGonder.Visible = False;
+  AltNavGuncelle('GENEL');
+  pnlDashIcerik.Visible = True;
+  BannerOzetGuncelle;
+  DurumGuncelle;
+  MenuOzetGuncelle;
+  DashUsteDon;
+}
+
+void SayfaGoster(ABaslik, AMetin: String);
+{
+  MenuKapat;
+  ProfilKapat;
+  pnlDashIcerik.Visible = False;
+  lblDetayBaslik.Text = ABaslik;
+  memoSayfa.Lines.Text = '  ' + AMetin;
+  pnlDetay.Visible = True;
+  memoSayfa.Visible = True;
+  btnGeriSayfa.Visible = True;
+  edtBotMsg.Visible = False;
+  btnBotGonder.Visible = False;
+  clRTMethod(pnlDetay, 'BringTofront');
+}
+
+void GenelBakis;
+var
+  metin: String;
+{
+  AltNavGuncelle('GENEL');
+  metin = GenelBakisMetni(GYorum, GRaporBaslik, nToplam, nUyari, nKayit, nAksiyon, nRapor);
+  SayfaGoster('Genel bakış', metin);
+}
+
+void KpiGit;
+var
+  metin: String;
+{
+  if (RolKpiGorebilir == 0)
+    GenelBakis
+  else
+  {
+  AltNavGuncelle('KPI');
+  metin = AlanListesi(kpiJson, '"name":"', 8);
+  if (metin == '')
+    metin = 'Canlı KPI tanımı yok.';
+  SayfaGoster('KPI yönetimi', KpiYonetimiMetni(metin, nSatis, nFinans, nOperasyon, nIk, nPazarlama, nUretim, nMusteri));
+  }
+}
+
+void AnalizGit;
+var
+  metin: String;
+{
+  if (RolAnalizGorebilir == 0)
+    GenelBakis
+  else
+  {
+  AltNavGuncelle('ANALIZ');
+  metin = AlanListesi(analizJson, '"executiveComment":"', 21);
+  if (metin == '')
+    metin = GYorum;
+  if (metin == '')
+    metin = 'Canlı analiz yok.';
+  SayfaGoster('Analiz merkezi', AnalizMetni(metin, GRaporBaslik, nKritikUyari, nRiskUyari, nInfoUyari, nRapor));
+  }
+}
+
+void UyariGit;
+var
+  metin: String;
+{
+  if (RolUyariGorebilir == 0)
+    GenelBakis
+  else
+  {
+  AltNavGuncelle('UYARI');
+  metin = AlanListesi(alertJson, '"title":"', 9);
+  if (metin == '')
+    metin = 'Açık uyarı yok.';
+  SayfaGoster('Uyarılar', UyariMetni(metin, nKritikUyari, nRiskUyari, nInfoUyari, nAksiyon));
+  }
+}
+
+void ZilTikla;
+{
+  UyariGit;
+}
+
+void AksiyonGit;
+var
+  metin: String;
+{
+  if (RolAksiyonGorebilir == 0)
+    GenelBakis
+  else
+  {
+  AltNavGuncelle('AKSIYON');
+  metin = AlanListesi(actionJson, '"title":"', 9);
+  if (metin == '')
+    metin = 'Açık aksiyon planı yok.';
+  SayfaGoster('Aksiyon planları', AksiyonMetni(metin, nAksiyon, nUyari));
+  }
+}
+
+void RaporGit;
+var
+  metin: String;
+{
+  if (RolRaporGorebilir == 0)
+    GenelBakis
+  else
+  {
+  AltNavGuncelle('RAPOR');
+  metin = AlanListesi(reportJson, '"title":"', 9);
+  if (metin == '')
+    metin = 'Hazır yönetici raporu yok.';
+  SayfaGoster('AI yönetici raporları', RaporMetni(metin, GRaporBaslik, nRapor, nAksiyon));
+  }
+}
+
+void VeriGit;
+var
+  metin: String;
+{
+  if (RolVeriGorebilir == 0)
+    GenelBakis
+  else
+  {
+  metin = AlanListesi(entryJson, '"period":"', 10);
+  if (metin == '')
+    metin = 'Henüz veri kaydı yok.';
+  SayfaGoster('Veri girişi', VeriMetni(metin, nKayit));
+  }
+}
+
+void AnomaliGit;
+var
+  metin: String;
+{
+  if (RolAnomaliGorebilir == 0)
+    GenelBakis
+  else
+  {
+  metin = AlanListesi(anomalyJson, '"description":"', 15);
+  if (metin == '')
+    metin = 'Tespit edilen anomali yok.';
+  SayfaGoster('Anomali merkezi', AnomaliMetni(metin, nAnomali, nKritikUyari));
+  }
+}
+
+void TahminGit;
+var
+  metin: String;
+{
+  if (RolTahminGorebilir == 0)
+    GenelBakis
+  else
+  {
+  metin = AlanListesi(analizJson, '"executiveComment":"', 21);
+  if (metin == '')
+    metin = GYorum;
+  if (metin == '')
+    metin = 'Tahmin verisi henüz oluşmadı.';
+  SayfaGoster('Tahminler', TahminMetni(metin, nTahmin, nToplam));
+  }
+}
+
+void ExportGit;
+var
+  metin: String;
+{
+  if (RolExportGorebilir == 0)
+    GenelBakis
+  else
+  {
+  metin = AlanListesi(reportJson, '"title":"', 9);
+  if (metin == '')
+    metin = 'Dışa aktarılacak rapor başlığı yok.';
+  SayfaGoster('Raporlar', ExportMetni(metin, nKayit, nUyari, nAksiyon));
+  }
+}
+
+void YardimGit;
+{
+  SayfaGoster('Yardım', YardimMetni);
+}
+
+void AyarlarGit;
+{
+  if (RolAyarlarGorebilir == 0)
+    YardimGit
+  else
+    SayfaGoster('Ayarlar', AyarlarMetni);
+}
+
+void DenetimGit;
+var
+  metin: String;
+{
+  if (RolDenetimGorebilir == 0)
+    YardimGit
+  else
+  {
+  metin = AlanListesi(auditJson, '"action":"', 10);
+  if (metin == '')
+    metin = 'Henüz kayıtlı işlem yok.';
+  SayfaGoster('İşlem geçmişi', DenetimMetni(metin, nDenetim));
+  }
+}
+
+void ProfilKpiGit;
+{
+  ProfilKapat;
+  KpiGit;
+}
+
+void ProfilUyariGit;
+{
+  ProfilKapat;
+  UyariGit;
+}
+
+void ProfilBotGit;
+{
+  ProfilKapat;
+  BotGit;
+}
+
+void YorumGit;
+{
+  AnalizGit;
+}
+
+void DashboardAc;
+{
+  CanliVeriYukle;
+
+  frmDash = TclForm.Create(Self);
+  frmDash.SetFormColor('#faf4e4', '#f4ebd3', clGVertical);
+  frmDash.clSetCaption('DeltaKPI');
+  BarGizle(frmDash);
+
+  sideMenu = frmDash.AddNewMenuFrame(frmDash, 'sideMenu');
+  sideMenu.Align = alContents;
+  sideMenu.MenuBar.Width = 218;
+  sideMenu.Visible = False;
+  sideMenu.ClMenuPosition = clLeft;
+
+  lblMenuUnvan = frmDash.AddNewProLabel(sideMenu.VertScrollBox, 'lblMenuUnvan', 'DeltaKPI');
+  lblMenuUnvan.Align = alMostTop;
+  lblMenuUnvan.Height = 44;
+  lblMenuUnvan.Margins.Left = 14;
+  lblMenuUnvan.Margins.Top = 14;
+  YaziAyar(lblMenuUnvan, '#c98a1b', 19);
+  lblMenuUnvan.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblMenuUnvan.SetclProSettings(lblMenuUnvan.clProSettings);
+
+  lblMenuUser = frmDash.AddNewProLabel(sideMenu.VertScrollBox, 'lblMenuUser', GUserName);
+  lblMenuUser.Align = alMostTop;
+  lblMenuUser.Height = 26;
+  lblMenuUser.Margins.Left = 14;
+  lblMenuUser.Margins.Top = 2;
+  YaziAyar(lblMenuUser, '#6b5a2e', 12);
+
+  lblMenuFirma = frmDash.AddNewProLabel(sideMenu.VertScrollBox, 'lblMenuFirma', GCompanyName);
+  lblMenuFirma.Align = alMostTop;
+  lblMenuFirma.Height = 22;
+  lblMenuFirma.Margins.Left = 14;
+  lblMenuFirma.Margins.Top = 2;
+  YaziAyar(lblMenuFirma, '#8a7342', 11);
+
+  lblMenuCanli = frmDash.AddNewProLabel(sideMenu.VertScrollBox, 'lblMenuCanli', '');
+  lblMenuCanli.Align = alMostTop;
+  lblMenuCanli.Height = 34;
+  lblMenuCanli.Margins.Left = 14;
+  lblMenuCanli.Margins.Right = 14;
+  lblMenuCanli.Margins.Top = 6;
+  YaziAyar(lblMenuCanli, '#b36a00', 10);
+  lblMenuCanli.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff2cc');
+  lblMenuCanli.clProSettings.FontHorzAlign = palCenter;
+  lblMenuCanli.clProSettings.FontVertAlign = palcenter;
+  lblMenuCanli.clProSettings.IsRound = True;
+  lblMenuCanli.clProSettings.RoundHeight = 8;
+  lblMenuCanli.clProSettings.RoundWidth = 8;
+  lblMenuCanli.SetclProSettings(lblMenuCanli.clProSettings);
+
+  lblMenuGrupAna = frmDash.AddNewProLabel(sideMenu.VertScrollBox, 'lblMenuGrupAna', 'ANA MENU');
+  lblMenuGrupAna.Align = alMostTop;
+  lblMenuGrupAna.Height = 22;
+  lblMenuGrupAna.Margins.Left = 14;
+  lblMenuGrupAna.Margins.Top = 8;
+  YaziAyar(lblMenuGrupAna, '#8a7342', 10);
+  lblMenuGrupAna.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblMenuGrupAna.SetclProSettings(lblMenuGrupAna.clProSettings);
+
+  btnNavDash = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavDash', '  📊 Ana sayfa');
+  KremBtn(btnNavDash);
+  frmDash.AddNewEvent(btnNavDash, tbeOnClick, 'AnaEkran');
+
+  btnNavKpi = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavKpi', '  🎯 KPI yönetimi');
+  KremBtn(btnNavKpi);
+  frmDash.AddNewEvent(btnNavKpi, tbeOnClick, 'KpiGit');
+
+  btnNavAnaliz = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavAnaliz', '  📈 Analiz merkezi');
+  KremBtn(btnNavAnaliz);
+  frmDash.AddNewEvent(btnNavAnaliz, tbeOnClick, 'AnalizGit');
+
+  btnNavUyari = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavUyari', '  🔔 Uyarı akışı');
+  KremBtn(btnNavUyari);
+  frmDash.AddNewEvent(btnNavUyari, tbeOnClick, 'UyariGit');
+
+  btnNavAksiyon = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavAksiyon', '  ✅ Aksiyon planları');
+  KremBtn(btnNavAksiyon);
+  frmDash.AddNewEvent(btnNavAksiyon, tbeOnClick, 'AksiyonGit');
+
+  btnNavRapor = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavRapor', '  ✨ AI raporları');
+  KremBtn(btnNavRapor);
+  frmDash.AddNewEvent(btnNavRapor, tbeOnClick, 'RaporGit');
+
+  btnNavVeri = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavVeri', '  ✏ Veri girişi');
+  KremBtn(btnNavVeri);
+  frmDash.AddNewEvent(btnNavVeri, tbeOnClick, 'VeriGit');
+
+  btnNavAnomali = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavAnomali', '  📡 Anomali merkezi');
+  KremBtn(btnNavAnomali);
+  frmDash.AddNewEvent(btnNavAnomali, tbeOnClick, 'AnomaliGit');
+
+  btnNavTahmin = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavTahmin', '  📉 Tahminler');
+  KremBtn(btnNavTahmin);
+  frmDash.AddNewEvent(btnNavTahmin, tbeOnClick, 'TahminGit');
+
+  btnNavExport = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavExport', '  📄 Raporlar / Export');
+  KremBtn(btnNavExport);
+  frmDash.AddNewEvent(btnNavExport, tbeOnClick, 'ExportGit');
+
+  btnNavYardim = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavYardim', '  ❓ Yardım');
+  KremBtn(btnNavYardim);
+  frmDash.AddNewEvent(btnNavYardim, tbeOnClick, 'YardimGit');
+
+  btnNavBot = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavBot', '  🤖 Asistan');
+  KremBtn(btnNavBot);
+  frmDash.AddNewEvent(btnNavBot, tbeOnClick, 'BotGit');
+
+  lblMenuGrupYon = frmDash.AddNewProLabel(sideMenu.VertScrollBox, 'lblMenuGrupYon', 'YÖNETİM');
+  lblMenuGrupYon.Align = alMostTop;
+  lblMenuGrupYon.Height = 22;
+  lblMenuGrupYon.Margins.Left = 14;
+  lblMenuGrupYon.Margins.Top = 8;
+  YaziAyar(lblMenuGrupYon, '#8a7342', 10);
+  lblMenuGrupYon.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblMenuGrupYon.SetclProSettings(lblMenuGrupYon.clProSettings);
+
+  btnNavAyarlar = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavAyarlar', '  ⚙ Ayarlar');
+  KremBtn(btnNavAyarlar);
+  frmDash.AddNewEvent(btnNavAyarlar, tbeOnClick, 'AyarlarGit');
+
+  btnNavDenetim = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavDenetim', '  🕘 İşlem geçmişi');
+  KremBtn(btnNavDenetim);
+  frmDash.AddNewEvent(btnNavDenetim, tbeOnClick, 'DenetimGit');
+
+  btnNavCikis = frmDash.AddNewProButton(sideMenu.VertScrollBox, 'btnNavCikis', '  Çıkış');
+  KremBtn(btnNavCikis);
+  AltinBtn(btnNavCikis);
+  btnNavCikis.clProSettings.FontHorzAlign = palCenter;
+  btnNavCikis.SetclProSettings(btnNavCikis.clProSettings);
+  frmDash.AddNewEvent(btnNavCikis, tbeOnClick, 'CikisYap');
+
+  pnlBanner = frmDash.AddNewProPanel(frmDash, 'pnlBanner');
+  pnlBanner.Align = alMostTop;
+  pnlBanner.Height = 56;
+  pnlBanner.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  pnlBanner.clProSettings.IsFill = True;
+  pnlBanner.clProSettings.IsRound = False;
+  pnlBanner.clProSettings.BorderWidth = 0;
+  pnlBanner.SetclProSettings(pnlBanner.clProSettings);
+
+  layUst = frmDash.AddNewLayout(pnlBanner, 'layUst');
+  layUst.Align = alClient;
+  layUst.Height = 52;
+  layUst.Margins.Left = 10;
+  layUst.Margins.Right = 10;
+
+  btnMenu = frmDash.AddNewProButton(layUst, 'btnMenu', '☰');
+  MenuBarBtn(btnMenu, '☰');
+  frmDash.AddNewEvent(btnMenu, tbeOnClick, 'MenuAc');
+
+  lblBanner = frmDash.AddNewProLabel(layUst, 'lblBanner', 'DeltaKPI');
+  lblBanner.Align = alClient;
+  lblBanner.Margins.Left = 12;
+  YaziAyar(lblBanner, '#faf4e4', 19);
+  lblBanner.clProSettings.FontVertAlign = palcenter;
+  lblBanner.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBanner.SetclProSettings(lblBanner.clProSettings);
+
+  btnProfil = frmDash.AddNewProButton(layUst, 'btnProfil', '👤');
+  UstBarBtn(btnProfil, '👤');
+  frmDash.AddNewEvent(btnProfil, tbeOnClick, 'ProfilAc');
+
+  btnZil = frmDash.AddNewProButton(layUst, 'btnZil', '🔔');
+  UstBarBtn(btnZil, '🔔');
+  frmDash.AddNewEvent(btnZil, tbeOnClick, 'ZilTikla');
+
+  btnYenile = frmDash.AddNewProButton(layUst, 'btnYenile', '🔄');
+  UstBarBtn(btnYenile, '🔄');
+  frmDash.AddNewEvent(btnYenile, tbeOnClick, 'YenileTikla');
+
+  dashScroll = frmDash.AddNewVertScrollBox(frmDash, 'dashScroll');
+  dashScroll.Align = alClient;
+
+  pnlAltNav = frmDash.AddNewProPanel(frmDash, 'pnlAltNav');
+  pnlAltNav.Align = alBottom;
+  pnlAltNav.Height = 76;
+  pnlAltNav.Margins.Left = 10;
+  pnlAltNav.Margins.Right = 10;
+  pnlAltNav.Margins.Bottom = 10;
+  pnlAltNav.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  pnlAltNav.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  pnlAltNav.clProSettings.BorderWidth = 1;
+  pnlAltNav.clProSettings.IsFill = True;
+  pnlAltNav.clProSettings.IsRound = True;
+  pnlAltNav.clProSettings.RoundHeight = 16;
+  pnlAltNav.clProSettings.RoundWidth = 16;
+  pnlAltNav.SetclProSettings(pnlAltNav.clProSettings);
+
+  layAltNav = frmDash.AddNewLayout(pnlAltNav, 'layAltNav');
+  layAltNav.Align = alClient;
+  layAltNav.Margins.Left = 8;
+  layAltNav.Margins.Right = 8;
+
+  btnTabGenel = frmDash.AddNewProButton(layAltNav, 'btnTabGenel', '📊');
+  AltNavBtnAyar(btnTabGenel);
+  frmDash.AddNewEvent(btnTabGenel, tbeOnClick, 'AnaEkran');
+
+  btnTabKpi = frmDash.AddNewProButton(layAltNav, 'btnTabKpi', '🎯');
+  AltNavBtnAyar(btnTabKpi);
+  frmDash.AddNewEvent(btnTabKpi, tbeOnClick, 'KpiGit');
+
+  btnTabAnaliz = frmDash.AddNewProButton(layAltNav, 'btnTabAnaliz', '📈');
+  AltNavBtnAyar(btnTabAnaliz);
+  frmDash.AddNewEvent(btnTabAnaliz, tbeOnClick, 'AnalizGit');
+
+  btnTabUyari = frmDash.AddNewProButton(layAltNav, 'btnTabUyari', '🔔');
+  AltNavBtnAyar(btnTabUyari);
+  frmDash.AddNewEvent(btnTabUyari, tbeOnClick, 'UyariGit');
+
+  btnTabAksiyon = frmDash.AddNewProButton(layAltNav, 'btnTabAksiyon', '✅');
+  AltNavBtnAyar(btnTabAksiyon);
+  frmDash.AddNewEvent(btnTabAksiyon, tbeOnClick, 'AksiyonGit');
+
+  btnTabRapor = frmDash.AddNewProButton(layAltNav, 'btnTabRapor', '✨');
+  AltNavBtnAyar(btnTabRapor);
+  frmDash.AddNewEvent(btnTabRapor, tbeOnClick, 'RaporGit');
+
+  btnTabGenel.Visible = RolDashboardGorebilir == 1;
+  btnNavDash.Visible = RolDashboardGorebilir == 1;
+  btnTabKpi.Visible = RolKpiGorebilir == 1;
+  btnNavKpi.Visible = RolKpiGorebilir == 1;
+  btnTabAnaliz.Visible = RolAnalizGorebilir == 1;
+  btnNavAnaliz.Visible = RolAnalizGorebilir == 1;
+  btnTabUyari.Visible = RolUyariGorebilir == 1;
+  btnNavUyari.Visible = RolUyariGorebilir == 1;
+  btnTabAksiyon.Visible = RolAksiyonGorebilir == 1;
+  btnNavAksiyon.Visible = RolAksiyonGorebilir == 1;
+  btnTabRapor.Visible = RolRaporGorebilir == 1;
+  btnNavRapor.Visible = RolRaporGorebilir == 1;
+  btnNavVeri.Visible = RolVeriGorebilir == 1;
+  btnNavAnomali.Visible = RolAnomaliGorebilir == 1;
+  btnNavTahmin.Visible = RolTahminGorebilir == 1;
+  btnNavExport.Visible = RolExportGorebilir == 1;
+  btnNavYardim.Visible = RolYardimGorebilir == 1;
+  btnNavAyarlar.Visible = RolAyarlarGorebilir == 1;
+  btnNavDenetim.Visible = RolDenetimGorebilir == 1;
+  lblMenuGrupYon.Visible = False;
+  lblMenuGrupAna.Visible = RolDashboardGorebilir == 1;
+  if (RolAyarlarGorebilir == 1)
+    lblMenuGrupYon.Visible = True;
+  if (RolDenetimGorebilir == 1)
+    lblMenuGrupYon.Visible = True;
+
+  pnlDashIcerik = frmDash.AddNewProPanel(dashScroll, 'pnlDashIcerik');
+  pnlDashIcerik.Align = alMostTop;
+  pnlDashIcerik.Height = 2770;
+  pnlDashIcerik.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#faf4e4');
+  pnlDashIcerik.clProSettings.BorderWidth = 0;
+  pnlDashIcerik.clProSettings.IsFill = True;
+  pnlDashIcerik.SetclProSettings(pnlDashIcerik.clProSettings);
+
+  lblMerhaba = frmDash.AddNewProLabel(pnlDashIcerik, 'lblMerhaba', 'Merhaba ' + GUserName);
+  lblMerhaba.Align = alMostTop;
+  lblMerhaba.Height = 36;
+  lblMerhaba.Margins.Left = 16;
+  lblMerhaba.Margins.Right = 16;
+  lblMerhaba.Margins.Top = 14;
+  YaziAyar(lblMerhaba, '#2a2210', 22);
+  lblMerhaba.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblMerhaba.SetclProSettings(lblMerhaba.clProSettings);
+
+  lblFirma = frmDash.AddNewProLabel(pnlDashIcerik, 'lblFirma', GCompanyName + '  |  ' + GUserRole);
+  lblFirma.Align = alMostTop;
+  lblFirma.Height = 28;
+  lblFirma.Margins.Left = 16;
+  lblFirma.Margins.Right = 16;
+  YaziAyar(lblFirma, '#6b5a2e', 12);
+
+  pnlCanliDurum = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlCanliDurum');
+  pnlCanliDurum.Align = alMostTop;
+  pnlCanliDurum.Height = 56;
+  pnlCanliDurum.Margins.Left = 12;
+  pnlCanliDurum.Margins.Right = 12;
+  pnlCanliDurum.Margins.Top = 8;
+  KremPanel(pnlCanliDurum);
+
+  lblDurumChip = frmDash.AddNewProLabel(pnlCanliDurum, 'lblDurumChip', 'STABIL');
+  lblDurumChip.Align = alLeft;
+  lblDurumChip.Width = 88;
+  lblDurumChip.Height = 36;
+  lblDurumChip.Margins.Left = 12;
+  lblDurumChip.Margins.Top = 10;
+  lblDurumChip.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#e8f5e9');
+  lblDurumChip.clProSettings.FontColor = clAlphaColor.clHexToColor('#2e7d32');
+  lblDurumChip.clProSettings.FontSize = 11;
+  lblDurumChip.clProSettings.FontHorzAlign = palCenter;
+  lblDurumChip.clProSettings.FontVertAlign = palcenter;
+  lblDurumChip.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblDurumChip.clProSettings.IsRound = True;
+  lblDurumChip.clProSettings.RoundHeight = 10;
+  lblDurumChip.clProSettings.RoundWidth = 10;
+  lblDurumChip.SetclProSettings(lblDurumChip.clProSettings);
+
+  lblDurumAciklama = frmDash.AddNewProLabel(pnlCanliDurum, 'lblDurumAciklama', DurumOnerisi);
+  lblDurumAciklama.Align = alClient;
+  lblDurumAciklama.Margins.Left = 10;
+  lblDurumAciklama.Margins.Right = 12;
+  lblDurumAciklama.Margins.Top = 8;
+  lblDurumAciklama.Margins.Bottom = 8;
+  YaziAyar(lblDurumAciklama, '#6b5a2e', 11);
+
+  pnlBannerOzet = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlBannerOzet');
+  pnlBannerOzet.Align = alMostTop;
+  pnlBannerOzet.Height = 168;
+  pnlBannerOzet.Margins.Left = 12;
+  pnlBannerOzet.Margins.Right = 12;
+  pnlBannerOzet.Margins.Top = 10;
+  pnlBannerOzet.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  pnlBannerOzet.clProSettings.IsFill = True;
+  pnlBannerOzet.clProSettings.IsRound = True;
+  pnlBannerOzet.clProSettings.RoundHeight = 16;
+  pnlBannerOzet.clProSettings.RoundWidth = 16;
+  pnlBannerOzet.clProSettings.BorderWidth = 0;
+  pnlBannerOzet.SetclProSettings(pnlBannerOzet.clProSettings);
+
+  lblBannerOzet = frmDash.AddNewProLabel(pnlBannerOzet, 'lblBannerOzet', 'Canlı panel özeti');
+  lblBannerOzet.Align = alMostTop;
+  lblBannerOzet.Height = 30;
+  lblBannerOzet.Margins.Left = 14;
+  lblBannerOzet.Margins.Right = 14;
+  lblBannerOzet.Margins.Top = 12;
+  YaziAyar(lblBannerOzet, '#faf4e4', 17);
+  lblBannerOzet.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBannerOzet.SetclProSettings(lblBannerOzet.clProSettings);
+
+  lblBannerOzetAlt = frmDash.AddNewProLabel(pnlBannerOzet, 'lblBannerOzetAlt', '');
+  lblBannerOzetAlt.Align = alMostTop;
+  lblBannerOzetAlt.Height = 22;
+  lblBannerOzetAlt.Margins.Left = 14;
+  lblBannerOzetAlt.Margins.Right = 14;
+  lblBannerOzetAlt.Margins.Top = 2;
+  YaziAyar(lblBannerOzetAlt, '#fff2cc', 12);
+
+  pnlHero = frmDash.AddNewProPanel(pnlBannerOzet, 'pnlHero');
+  pnlHero.Align = alClient;
+  pnlHero.Margins.Left = 8;
+  pnlHero.Margins.Right = 8;
+  pnlHero.Margins.Bottom = 10;
+  pnlHero.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  pnlHero.clProSettings.BorderWidth = 0;
+  pnlHero.clProSettings.IsFill = True;
+  pnlHero.SetclProSettings(pnlHero.clProSettings);
+
+  btnHeroKpi = frmDash.AddNewProButton(pnlHero, 'btnHeroKpi', 'KPI' + #13#10 + '0');
+  HeroBtnAyar(btnHeroKpi, '#2a2210', '#fff8ea');
+  frmDash.AddNewEvent(btnHeroKpi, tbeOnClick, 'KpiGit');
+
+  btnHeroRisk = frmDash.AddNewProButton(pnlHero, 'btnHeroRisk', 'Risk' + #13#10 + '0');
+  HeroBtnAyar(btnHeroRisk, '#b36a00', '#fff2cc');
+  frmDash.AddNewEvent(btnHeroRisk, tbeOnClick, 'UyariGit');
+
+  btnHeroKritik = frmDash.AddNewProButton(pnlHero, 'btnHeroKritik', 'Kritik' + #13#10 + '0');
+  HeroBtnAyar(btnHeroKritik, '#8b1a1a', '#ffe8e8');
+  frmDash.AddNewEvent(btnHeroKritik, tbeOnClick, 'UyariGit');
+
+  pnlHizliLink = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlHizliLink');
+  pnlHizliLink.Align = alMostTop;
+  pnlHizliLink.Height = 48;
+  pnlHizliLink.Margins.Left = 8;
+  pnlHizliLink.Margins.Right = 8;
+  pnlHizliLink.Margins.Top = 4;
+  pnlHizliLink.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#faf4e4');
+  pnlHizliLink.clProSettings.BorderWidth = 0;
+  pnlHizliLink.clProSettings.IsFill = True;
+  pnlHizliLink.SetclProSettings(pnlHizliLink.clProSettings);
+
+  btnHizliVeri = frmDash.AddNewProButton(pnlHizliLink, 'btnHizliVeri', '✏ Veri');
+  HizliLinkBtn(btnHizliVeri);
+  frmDash.AddNewEvent(btnHizliVeri, tbeOnClick, 'VeriGit');
+
+  btnHizliAnomali = frmDash.AddNewProButton(pnlHizliLink, 'btnHizliAnomali', '📡 Anomali');
+  HizliLinkBtn(btnHizliAnomali);
+  frmDash.AddNewEvent(btnHizliAnomali, tbeOnClick, 'AnomaliGit');
+
+  btnHizliTahmin = frmDash.AddNewProButton(pnlHizliLink, 'btnHizliTahmin', '📉 Tahmin');
+  HizliLinkBtn(btnHizliTahmin);
+  frmDash.AddNewEvent(btnHizliTahmin, tbeOnClick, 'TahminGit');
+
+  pnlHizliLink2 = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlHizliLink2');
+  pnlHizliLink2.Align = alMostTop;
+  pnlHizliLink2.Height = 48;
+  pnlHizliLink2.Margins.Left = 8;
+  pnlHizliLink2.Margins.Right = 8;
+  pnlHizliLink2.Margins.Top = 2;
+  pnlHizliLink2.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#faf4e4');
+  pnlHizliLink2.clProSettings.BorderWidth = 0;
+  pnlHizliLink2.clProSettings.IsFill = True;
+  pnlHizliLink2.SetclProSettings(pnlHizliLink2.clProSettings);
+
+  btnHizliAnaliz = frmDash.AddNewProButton(pnlHizliLink2, 'btnHizliAnaliz', '📈 Analiz');
+  HizliLinkBtn(btnHizliAnaliz);
+  frmDash.AddNewEvent(btnHizliAnaliz, tbeOnClick, 'AnalizGit');
+
+  btnHizliAksiyon = frmDash.AddNewProButton(pnlHizliLink2, 'btnHizliAksiyon', '✅ Aksiyon');
+  HizliLinkBtn(btnHizliAksiyon);
+  frmDash.AddNewEvent(btnHizliAksiyon, tbeOnClick, 'AksiyonGit');
+
+  btnHizliRapor = frmDash.AddNewProButton(pnlHizliLink2, 'btnHizliRapor', '✨ Rapor');
+  HizliLinkBtn(btnHizliRapor);
+  frmDash.AddNewEvent(btnHizliRapor, tbeOnClick, 'RaporGit');
+
+  btnHizliVeri.Visible = RolVeriGorebilir == 1;
+  btnHizliAnomali.Visible = RolAnomaliGorebilir == 1;
+  btnHizliTahmin.Visible = RolTahminGorebilir == 1;
+  btnHizliAnaliz.Visible = RolAnalizGorebilir == 1;
+  btnHizliAksiyon.Visible = RolAksiyonGorebilir == 1;
+  btnHizliRapor.Visible = RolRaporGorebilir == 1;
+
+  pnlWebNot = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlWebNot');
+  pnlWebNot.Align = alMostTop;
+  pnlWebNot.Height = 64;
+  pnlWebNot.Margins.Left = 12;
+  pnlWebNot.Margins.Right = 12;
+  pnlWebNot.Margins.Top = 4;
+  KremPanel(pnlWebNot);
+
+  lblWebNot = frmDash.AddNewProLabel(pnlWebNot, 'lblWebNot', '');
+  lblWebNot.Align = alClient;
+  lblWebNot.Margins.Left = 12;
+  lblWebNot.Margins.Right = 12;
+  lblWebNot.Margins.Top = 8;
+  lblWebNot.Margins.Bottom = 8;
+  YaziAyar(lblWebNot, '#6b5a2e', 11);
+
+  pnlOzet = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlOzet');
+  pnlOzet.Align = alMostTop;
+  pnlOzet.Height = 380;
+  pnlOzet.Margins.Left = 12;
+  pnlOzet.Margins.Right = 12;
+  pnlOzet.Margins.Top = 12;
+  pnlOzet.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#faf4e4');
+  pnlOzet.clProSettings.BorderWidth = 0;
+  pnlOzet.clProSettings.IsFill = True;
+  pnlOzet.SetclProSettings(pnlOzet.clProSettings);
+
+  lblOzetBaslik = frmDash.AddNewProLabel(pnlOzet, 'lblOzetBaslik', 'Bugün ne durumda');
+  lblOzetBaslik.Align = alMostTop;
+  lblOzetBaslik.Height = 34;
+  lblOzetBaslik.Margins.Left = 4;
+  lblOzetBaslik.Margins.Right = 4;
+  lblOzetBaslik.Margins.Top = 4;
+  YaziAyar(lblOzetBaslik, '#2a2210', 16);
+  lblOzetBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblOzetBaslik.SetclProSettings(lblOzetBaslik.clProSettings);
+
+  layMetrikKart = frmDash.AddNewFlowLayout(pnlOzet, 'layMetrikKart');
+  layMetrikKart.Align = alMostTop;
+  layMetrikKart.Height = 330;
+  layMetrikKart.Margins.Left = 2;
+  layMetrikKart.Margins.Right = 2;
+  layMetrikKart.Margins.Top = 6;
+  layMetrikKart.Margins.Bottom = 10;
+  layMetrikKart.HorizontalGap = 10;
+  layMetrikKart.VerticalGap = 10;
+
+  MetrikKartEkle(layMetrikKart, 'kartKpi', 'Takip edilen KPI', IntToStr(nToplam), 'KpiGit');
+  MetrikKartEkle(layMetrikKart, 'kartUyari', 'Bekleyen uyarı', IntToStr(nUyari), 'UyariGit');
+  MetrikKartEkle(layMetrikKart, 'kartKayit', 'Veri kaydı', IntToStr(nKayit), 'VeriGit');
+  MetrikKartEkle(layMetrikKart, 'kartAksiyon', 'Açık aksiyon', IntToStr(nAksiyon), 'AksiyonGit');
+  MetrikKartEkle(layMetrikKart, 'kartRapor', 'Hazır rapor', IntToStr(nRapor), 'RaporGit');
+
+  pnlYorum = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlYorum');
+  pnlYorum.Align = alMostTop;
+  pnlYorum.Height = 270;
+  pnlYorum.Margins.Left = 12;
+  pnlYorum.Margins.Right = 12;
+  pnlYorum.Margins.Top = 8;
+  KremPanel(pnlYorum);
+
+  lblYorumChip = frmDash.AddNewProLabel(pnlYorum, 'lblYorumChip', 'HIZLI RAPOR');
+  lblYorumChip.Align = alMostTop;
+  lblYorumChip.Height = 24;
+  lblYorumChip.Margins.Left = 12;
+  lblYorumChip.Margins.Right = 12;
+  lblYorumChip.Margins.Top = 10;
+  YaziAyar(lblYorumChip, '#b36a00', 10);
+  lblYorumChip.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff2cc');
+  lblYorumChip.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblYorumChip.clProSettings.FontHorzAlign = palCenter;
+  lblYorumChip.clProSettings.FontVertAlign = palcenter;
+  lblYorumChip.clProSettings.IsRound = True;
+  lblYorumChip.clProSettings.RoundHeight = 8;
+  lblYorumChip.clProSettings.RoundWidth = 8;
+  lblYorumChip.SetclProSettings(lblYorumChip.clProSettings);
+
+  lblYorumBaslik = frmDash.AddNewProLabel(pnlYorum, 'lblYorumBaslik', 'Yönetici notu');
+  lblYorumBaslik.Align = alMostTop;
+  lblYorumBaslik.Height = 30;
+  lblYorumBaslik.Margins.Left = 12;
+  lblYorumBaslik.Margins.Right = 12;
+  lblYorumBaslik.Margins.Top = 6;
+  YaziAyar(lblYorumBaslik, '#2a2210', 15);
+  lblYorumBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblYorumBaslik.SetclProSettings(lblYorumBaslik.clProSettings);
+
+  lblYorumAlt = frmDash.AddNewProLabel(pnlYorum, 'lblYorumAlt', 'Son rapor: ' + GRaporBaslik);
+  lblYorumAlt.Align = alMostTop;
+  lblYorumAlt.Height = 48;
+  lblYorumAlt.Margins.Left = 12;
+  lblYorumAlt.Margins.Right = 12;
+  lblYorumAlt.Margins.Top = 2;
+  YaziAyar(lblYorumAlt, '#8a7342', 11);
+
+  lblYorumMeta = frmDash.AddNewProLabel(pnlYorum, 'lblYorumMeta', 'Anomali: ' + IntToStr(nAnomali) + '  |  Tahmin: ' + IntToStr(nTahmin) + '  |  Rapor: ' + IntToStr(nRapor));
+  lblYorumMeta.Align = alMostTop;
+  lblYorumMeta.Height = 24;
+  lblYorumMeta.Margins.Left = 12;
+  lblYorumMeta.Margins.Right = 12;
+  lblYorumMeta.Margins.Top = 2;
+  YaziAyar(lblYorumMeta, '#b36a00', 11);
+  lblYorumMeta.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblYorumMeta.SetclProSettings(lblYorumMeta.clProSettings);
+
+  lblYorum = frmDash.AddNewProLabel(pnlYorum, 'lblYorum', GYorum);
+  lblYorum.Align = alMostTop;
+  lblYorum.Height = 72;
+  lblYorum.Margins.Left = 12;
+  lblYorum.Margins.Right = 12;
+  lblYorum.Margins.Top = 4;
+  YaziAyar(lblYorum, '#6b5a2e', 12);
+
+  btnYorumDetay = frmDash.AddNewProButton(pnlYorum, 'btnYorumDetay', 'Analiz merkezine git');
+  btnYorumDetay.Align = alMostTop;
+  btnYorumDetay.Height = 36;
+  btnYorumDetay.Margins.Left = 12;
+  btnYorumDetay.Margins.Right = 12;
+  btnYorumDetay.Margins.Top = 4;
+  btnYorumDetay.Margins.Bottom = 12;
+  btnYorumDetay.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  btnYorumDetay.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  btnYorumDetay.clProSettings.FontSize = 11;
+  btnYorumDetay.clProSettings.FontHorzAlign = palCenter;
+  btnYorumDetay.clProSettings.FontVertAlign = palcenter;
+  btnYorumDetay.clProSettings.TextSettings.Font.Style = [fsBold];
+  btnYorumDetay.clProSettings.IsRound = True;
+  btnYorumDetay.clProSettings.RoundHeight = 10;
+  btnYorumDetay.clProSettings.RoundWidth = 10;
+  btnYorumDetay.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  btnYorumDetay.clProSettings.BorderWidth = 1;
+  btnYorumDetay.clProSettings.IsFill = True;
+  btnYorumDetay.SetclProSettings(btnYorumDetay.clProSettings);
+  frmDash.AddNewEvent(btnYorumDetay, tbeOnClick, 'YorumGit');
+
+  pnlSonAktivite = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlSonAktivite');
+  pnlSonAktivite.Align = alMostTop;
+  pnlSonAktivite.Height = 260;
+  pnlSonAktivite.Margins.Left = 12;
+  pnlSonAktivite.Margins.Right = 12;
+  pnlSonAktivite.Margins.Top = 8;
+  KremPanel(pnlSonAktivite);
+
+  lblSonAktiviteBaslik = frmDash.AddNewProLabel(pnlSonAktivite, 'lblSonAktiviteBaslik', 'Canlı aktivite akışı');
+  lblSonAktiviteBaslik.Align = alMostTop;
+  lblSonAktiviteBaslik.Height = 30;
+  lblSonAktiviteBaslik.Margins.Left = 14;
+  lblSonAktiviteBaslik.Margins.Right = 14;
+  lblSonAktiviteBaslik.Margins.Top = 10;
+  YaziAyar(lblSonAktiviteBaslik, '#2a2210', 15);
+  lblSonAktiviteBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblSonAktiviteBaslik.SetclProSettings(lblSonAktiviteBaslik.clProSettings);
+
+  lblSonAktivite = frmDash.AddNewProLabel(pnlSonAktivite, 'lblSonAktivite', SonAktiviteMetni);
+  lblSonAktivite.Align = alClient;
+  lblSonAktivite.Margins.Left = 14;
+  lblSonAktivite.Margins.Right = 14;
+  lblSonAktivite.Margins.Top = 4;
+  lblSonAktivite.Margins.Bottom = 12;
+  YaziAyar(lblSonAktivite, '#6b5a2e', 11);
+
+  pnlPanelGrafik = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlPanelGrafik');
+  pnlPanelGrafik.Align = alMostTop;
+  pnlPanelGrafik.Height = 250;
+  pnlPanelGrafik.Margins.Left = 12;
+  pnlPanelGrafik.Margins.Right = 12;
+  pnlPanelGrafik.Margins.Top = 10;
+  KremPanel(pnlPanelGrafik);
+
+  lblPanelGrafikBaslik = frmDash.AddNewProLabel(pnlPanelGrafik, 'lblPanelGrafikBaslik', 'Panel özeti');
+  lblPanelGrafikBaslik.Align = alMostTop;
+  lblPanelGrafikBaslik.Height = 28;
+  lblPanelGrafikBaslik.Margins.Left = 16;
+  lblPanelGrafikBaslik.Margins.Right = 16;
+  lblPanelGrafikBaslik.Margins.Top = 10;
+  YaziAyar(lblPanelGrafikBaslik, '#2a2210', 15);
+  lblPanelGrafikBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblPanelGrafikBaslik.SetclProSettings(lblPanelGrafikBaslik.clProSettings);
+
+  chartPanelOzet = frmDash.AddNewChart(pnlPanelGrafik, 'chartPanelOzet', 'Panel özeti');
+  chartPanelOzet.Align = alClient;
+  chartPanelOzet.Margins.Left = 12;
+  chartPanelOzet.Margins.Right = 12;
+  chartPanelOzet.Margins.Top = 8;
+  chartPanelOzet.Margins.Bottom = 12;
+  PanelOzetChartDoldurEx(chartPanelOzet, nToplam, nUyari, nKayit);
+
+  pnlKategoriGrafik = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlKategoriGrafik');
+  pnlKategoriGrafik.Align = alMostTop;
+  pnlKategoriGrafik.Height = 250;
+  pnlKategoriGrafik.Margins.Left = 12;
+  pnlKategoriGrafik.Margins.Right = 12;
+  pnlKategoriGrafik.Margins.Top = 10;
+  KremPanel(pnlKategoriGrafik);
+
+  lblChartBaslik = frmDash.AddNewProLabel(pnlKategoriGrafik, 'lblChartBaslik', 'Kategori dağılımı');
+  lblChartBaslik.Align = alMostTop;
+  lblChartBaslik.Height = 28;
+  lblChartBaslik.Margins.Left = 16;
+  lblChartBaslik.Margins.Right = 16;
+  lblChartBaslik.Margins.Top = 10;
+  YaziAyar(lblChartBaslik, '#2a2210', 15);
+  lblChartBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblChartBaslik.SetclProSettings(lblChartBaslik.clProSettings);
+
+
+  chartKpi = frmDash.AddNewChart(pnlKategoriGrafik, 'chartKpi', 'KPI dağılımı');
+  chartKpi.Align = alClient;
+  chartKpi.Margins.Left = 12;
+  chartKpi.Margins.Right = 12;
+  chartKpi.Margins.Top = 8;
+  chartKpi.Margins.Bottom = 12;
+  ChartDoldurEx(chartKpi, nSatis, nFinans, nOperasyon, nIk, nPazarlama, nUretim, nMusteri);
+
+  pnlUyariGrafik = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlUyariGrafik');
+  pnlUyariGrafik.Align = alMostTop;
+  pnlUyariGrafik.Height = 250;
+  pnlUyariGrafik.Margins.Left = 12;
+  pnlUyariGrafik.Margins.Right = 12;
+  pnlUyariGrafik.Margins.Top = 10;
+  KremPanel(pnlUyariGrafik);
+
+  lblUyariGrafikBaslik = frmDash.AddNewProLabel(pnlUyariGrafik, 'lblUyariGrafikBaslik', 'Uyarı görünümü');
+  lblUyariGrafikBaslik.Align = alMostTop;
+  lblUyariGrafikBaslik.Height = 28;
+  lblUyariGrafikBaslik.Margins.Left = 16;
+  lblUyariGrafikBaslik.Margins.Right = 16;
+  lblUyariGrafikBaslik.Margins.Top = 10;
+  YaziAyar(lblUyariGrafikBaslik, '#2a2210', 15);
+  lblUyariGrafikBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblUyariGrafikBaslik.SetclProSettings(lblUyariGrafikBaslik.clProSettings);
+
+  chartUyari = frmDash.AddNewChart(pnlUyariGrafik, 'chartUyari', 'Uyarı dağılımı');
+  chartUyari.Align = alClient;
+  chartUyari.Margins.Left = 12;
+  chartUyari.Margins.Right = 12;
+  chartUyari.Margins.Top = 8;
+  chartUyari.Margins.Bottom = 12;
+  UyariChartDoldurEx(chartUyari, nKritikUyari, nRiskUyari, nInfoUyari);
+
+  pnlAnomaliGrafik = frmDash.AddNewProPanel(pnlDashIcerik, 'pnlAnomaliGrafik');
+  pnlAnomaliGrafik.Align = alMostTop;
+  pnlAnomaliGrafik.Height = 250;
+  pnlAnomaliGrafik.Margins.Left = 12;
+  pnlAnomaliGrafik.Margins.Right = 12;
+  pnlAnomaliGrafik.Margins.Top = 10;
+  KremPanel(pnlAnomaliGrafik);
+
+  lblAnomaliGrafikBaslik = frmDash.AddNewProLabel(pnlAnomaliGrafik, 'lblAnomaliGrafikBaslik', 'Risk ve anomali');
+  lblAnomaliGrafikBaslik.Align = alMostTop;
+  lblAnomaliGrafikBaslik.Height = 28;
+  lblAnomaliGrafikBaslik.Margins.Left = 16;
+  lblAnomaliGrafikBaslik.Margins.Right = 16;
+  lblAnomaliGrafikBaslik.Margins.Top = 10;
+  YaziAyar(lblAnomaliGrafikBaslik, '#2a2210', 15);
+  lblAnomaliGrafikBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblAnomaliGrafikBaslik.SetclProSettings(lblAnomaliGrafikBaslik.clProSettings);
+
+  chartAnomali = frmDash.AddNewChart(pnlAnomaliGrafik, 'chartAnomali', 'Risk görünümü');
+  chartAnomali.Align = alClient;
+  chartAnomali.Margins.Left = 12;
+  chartAnomali.Margins.Right = 12;
+  chartAnomali.Margins.Top = 8;
+  chartAnomali.Margins.Bottom = 12;
+  AnomaliChartDoldurEx(chartAnomali, nAnomali, nTahmin, nUyari);
+
+  pnlDetay = frmDash.AddNewProPanel(frmDash, 'pnlDetay');
+  pnlDetay.Align = alClient;
+  pnlDetay.Margins.Left = 8;
+  pnlDetay.Margins.Right = 8;
+  pnlDetay.Margins.Top = 6;
+  pnlDetay.Margins.Bottom = 8;
+  pnlDetay.Visible = False;
+  pnlDetay.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#faf4e4');
+  pnlDetay.clProSettings.BorderWidth = 0;
+  pnlDetay.clProSettings.IsFill = True;
+  pnlDetay.SetclProSettings(pnlDetay.clProSettings);
+
+  pnlDetayUst = frmDash.AddNewProPanel(pnlDetay, 'pnlDetayUst');
+  pnlDetayUst.Align = alMostTop;
+  pnlDetayUst.Height = 52;
+  pnlDetayUst.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#ffffff');
+  pnlDetayUst.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e8d5a8');
+  pnlDetayUst.clProSettings.BorderWidth = 1;
+  pnlDetayUst.clProSettings.IsFill = True;
+  pnlDetayUst.clProSettings.IsRound = True;
+  pnlDetayUst.clProSettings.RoundHeight = 14;
+  pnlDetayUst.clProSettings.RoundWidth = 14;
+  pnlDetayUst.SetclProSettings(pnlDetayUst.clProSettings);
+
+  btnGeriSayfa = frmDash.AddNewProButton(pnlDetayUst, 'btnGeriSayfa', '< Geri');
+  btnGeriSayfa.Align = alLeft;
+  btnGeriSayfa.Width = 72;
+  btnGeriSayfa.Margins.Left = 8;
+  btnGeriSayfa.Margins.Top = 8;
+  btnGeriSayfa.Margins.Bottom = 8;
+  btnGeriSayfa.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#2a2210');
+  btnGeriSayfa.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  btnGeriSayfa.clProSettings.FontSize = 12;
+  btnGeriSayfa.clProSettings.FontHorzAlign = palCenter;
+  btnGeriSayfa.clProSettings.FontVertAlign = palcenter;
+  btnGeriSayfa.clProSettings.TextSettings.Font.Style = [fsBold];
+  btnGeriSayfa.clProSettings.IsRound = True;
+  btnGeriSayfa.clProSettings.RoundHeight = 10;
+  btnGeriSayfa.clProSettings.RoundWidth = 10;
+  btnGeriSayfa.clProSettings.IsFill = True;
+  btnGeriSayfa.clProSettings.BorderWidth = 0;
+  btnGeriSayfa.Visible = False;
+  btnGeriSayfa.SetclProSettings(btnGeriSayfa.clProSettings);
+  frmDash.AddNewEvent(btnGeriSayfa, tbeOnClick, 'AnaEkran');
+
+  lblDetayBaslik = frmDash.AddNewProLabel(pnlDetayUst, 'lblDetayBaslik', '');
+  lblDetayBaslik.Align = alClient;
+  lblDetayBaslik.Margins.Left = 8;
+  lblDetayBaslik.Margins.Right = 12;
+  YaziAyar(lblDetayBaslik, '#2a2210', 15);
+  lblDetayBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblDetayBaslik.clProSettings.FontVertAlign = palcenter;
+  lblDetayBaslik.SetclProSettings(lblDetayBaslik.clProSettings);
+
+  pnlMemoWrap = frmDash.AddNewProPanel(pnlDetay, 'pnlMemoWrap');
+  pnlMemoWrap.Align = alClient;
+  pnlMemoWrap.Margins.Top = 8;
+  pnlMemoWrap.Margins.Left = 4;
+  pnlMemoWrap.Margins.Right = 4;
+  pnlMemoWrap.Margins.Bottom = 4;
+  KremPanel(pnlMemoWrap);
+
+  memoSayfa = frmDash.AddNewMemo(pnlMemoWrap, 'memoSayfa', '');
+  memoSayfa.Align = alClient;
+  MemoAyar(memoSayfa);
+  memoSayfa.Visible = False;
+
+  edtBotMsg = frmDash.AddNewProEdit(pnlDetay, 'edtBotMsg', 'Soru yaz: kpi, uyari, rapor...');
+  edtBotMsg.Align = alBottom;
+  edtBotMsg.Height = 44;
+  edtBotMsg.Margins.Left = 12;
+  edtBotMsg.Margins.Right = 12;
+  edtBotMsg.Margins.Bottom = 52;
+  edtBotMsg.Visible = False;
+  LoginEditAyar(edtBotMsg);
+
+  btnBotGonder = frmDash.AddNewProButton(pnlDetay, 'btnBotGonder', 'Gönder');
+  btnBotGonder.Align = alBottom;
+  btnBotGonder.Height = 40;
+  btnBotGonder.Margins.Left = 12;
+  btnBotGonder.Margins.Right = 12;
+  btnBotGonder.Margins.Bottom = 8;
+  btnBotGonder.Visible = False;
+  AltinBtn(btnBotGonder);
+  frmDash.AddNewEvent(btnBotGonder, tbeOnClick, 'BotGonderTikla');
+
+  pnlProfil = frmDash.AddNewProPanel(frmDash, 'pnlProfil');
+  pnlProfil.Align = alContents;
+  pnlProfil.Visible = False;
+  pnlProfil.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#faf4e4');
+  pnlProfil.clProSettings.IsFill = True;
+  pnlProfil.SetclProSettings(pnlProfil.clProSettings);
+
+  lblProfAd = frmDash.AddNewProLabel(pnlProfil, 'lblProfAd', GUserName);
+  lblProfAd.Align = alMostTop;
+  lblProfAd.Height = 36;
+  lblProfAd.Margins.Left = 24;
+  lblProfAd.Margins.Right = 24;
+  lblProfAd.Margins.Top = 120;
+  YaziAyar(lblProfAd, '#2a2210', 22);
+  lblProfAd.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblProfAd.clProSettings.FontHorzAlign = palCenter;
+  lblProfAd.SetclProSettings(lblProfAd.clProSettings);
+
+  lblProfRol = frmDash.AddNewProLabel(pnlProfil, 'lblProfRol', GUserRole);
+  lblProfRol.Align = alMostTop;
+  lblProfRol.Height = 28;
+  lblProfRol.Margins.Left = 24;
+  lblProfRol.Margins.Right = 24;
+  YaziAyar(lblProfRol, '#6b5a2e', 13);
+  lblProfRol.clProSettings.FontHorzAlign = palCenter;
+  lblProfRol.SetclProSettings(lblProfRol.clProSettings);
+
+  lblProfOzet = frmDash.AddNewProLabel(pnlProfil, 'lblProfOzet', GCompanyName);
+  lblProfOzet.Align = alMostTop;
+  lblProfOzet.Height = 120;
+  lblProfOzet.Margins.Left = 24;
+  lblProfOzet.Margins.Right = 24;
+  lblProfOzet.Margins.Top = 12;
+  YaziAyar(lblProfOzet, '#2a2210', 13);
+  lblProfOzet.clProSettings.FontHorzAlign = palCenter;
+  lblProfOzet.SetclProSettings(lblProfOzet.clProSettings);
+
+  btnProfKpi = frmDash.AddNewProButton(pnlProfil, 'btnProfKpi', 'KPI merkezi');
+  btnProfKpi.Align = alMostTop;
+  btnProfKpi.Height = 40;
+  btnProfKpi.Margins.Left = 48;
+  btnProfKpi.Margins.Right = 48;
+  btnProfKpi.Margins.Top = 16;
+  KremBtn(btnProfKpi);
+  frmDash.AddNewEvent(btnProfKpi, tbeOnClick, 'ProfilKpiGit');
+
+  btnProfUyari = frmDash.AddNewProButton(pnlProfil, 'btnProfUyari', 'Uyarı akışı');
+  btnProfUyari.Align = alMostTop;
+  btnProfUyari.Height = 40;
+  btnProfUyari.Margins.Left = 48;
+  btnProfUyari.Margins.Right = 48;
+  btnProfUyari.Margins.Top = 8;
+  KremBtn(btnProfUyari);
+  frmDash.AddNewEvent(btnProfUyari, tbeOnClick, 'ProfilUyariGit');
+
+  btnProfBot = frmDash.AddNewProButton(pnlProfil, 'btnProfBot', 'Asistan');
+  btnProfBot.Align = alMostTop;
+  btnProfBot.Height = 40;
+  btnProfBot.Margins.Left = 48;
+  btnProfBot.Margins.Right = 48;
+  btnProfBot.Margins.Top = 8;
+  KremBtn(btnProfBot);
+  frmDash.AddNewEvent(btnProfBot, tbeOnClick, 'ProfilBotGit');
+
+  btnProfKapat = frmDash.AddNewProButton(pnlProfil, 'btnProfKapat', 'Kapat');
+  btnProfKapat.Align = alMostTop;
+  btnProfKapat.Height = 44;
+  btnProfKapat.Margins.Left = 80;
+  btnProfKapat.Margins.Right = 80;
+  btnProfKapat.Margins.Top = 20;
+  AltinBtn(btnProfKapat);
+  frmDash.AddNewEvent(btnProfKapat, tbeOnClick, 'ProfilKapat');
+
+  BannerOzetGuncelle;
+  DurumGuncelle;
+  SonAktiviteGuncelle;
+  MenuOzetGuncelle;
+  ZilYaziGuncelle;
+
+  frmDash.Run;
+}
+
+void GirisTikla;
+{
+  mail = Trim(edtEmail.Text);
+  sifre = Trim(edtSifre.Text);
+  if (Copy(GAuthLoginUrl, 1, 4) <> 'http')
+    ShowMessage('Firebase ayarı eksik. Main.tro içindeki yerel ayarları doldurun.')
+  else if (MailOk(mail) == 0)
+    ShowMessage('E-posta okunamadı.')
+  else
+  {
+    body = '{"email":"' + mail + '","password":"' + sifre + '","returnSecureToken":true}';
+    HttpRest = TclRest.Create;
+    HttpRest.Accept = 'application/json';
+    HttpRest.ContentType = 'application/json';
+    HttpRest.ConnectTimeOut = 60000;
+    HttpRest.BaseURL = GAuthLoginUrl;
+    HttpRest.Method = rmPOST;
+    HttpRest.AddBody(body, 'application/json');
+    HttpRest.Execute;
+    cevap = HttpRest.Response;
+    GIdToken = Clomosy.CLParseJSON(cevap, 'idToken');
+    GUid = Clomosy.CLParseJSON(cevap, 'localId');
+    if (GIdToken == '')
+      ShowMessage('Giriş olmadı.')
+    else
+    {
+      profil = RtdbGet('users/' + GUid);
+      GCompanyId = Clomosy.CLParseJSON(profil, 'companyId');
+      GUserRole = Clomosy.CLParseJSON(profil, 'role');
+      GUserName = Clomosy.CLParseJSON(profil, 'firstName');
+      DashboardAc;
+    }
+  }
+}
+
+{
+  GAuthLoginUrl = 'FIREBASE_AUTH_LOGIN_URL';
+  GRtdbUrl = 'FIREBASE_RTDB_URL';
+  GIdToken = '';
+
+  frmLogin = TclForm.Create(Self);
+  frmLogin.SetFormColor('#faf4e4', '#f0e2c0', clGVertical);
+  frmLogin.clSetCaption('DeltaKPI');
+  BarGizle(frmLogin);
+
+  lblBaslik = frmLogin.AddNewProLabel(frmLogin, 'lblBaslik', 'DeltaKPI');
+  lblBaslik.Align = alMostTop;
+  lblBaslik.Height = 50;
+  lblBaslik.Margins.Left = 24;
+  lblBaslik.Margins.Right = 24;
+  lblBaslik.Margins.Top = 48;
+  YaziAyar(lblBaslik, '#c98a1b', 28);
+  lblBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBaslik.clProSettings.FontHorzAlign = palCenter;
+  lblBaslik.SetclProSettings(lblBaslik.clProSettings);
+
+  lblAlt = frmLogin.AddNewProLabel(frmLogin, 'lblAlt', 'Akıllı performans ve analiz');
+  lblAlt.Align = alMostTop;
+  lblAlt.Height = 34;
+  lblAlt.Margins.Left = 24;
+  lblAlt.Margins.Right = 24;
+  YaziAyar(lblAlt, '#6b5a2e', 13);
+  lblAlt.clProSettings.FontHorzAlign = palCenter;
+  lblAlt.SetclProSettings(lblAlt.clProSettings);
+
+  pnlLogin = frmLogin.AddNewProPanel(frmLogin, 'pnlLogin');
+  pnlLogin.Align = alMostTop;
+  pnlLogin.Height = 300;
+  pnlLogin.Margins.Left = 18;
+  pnlLogin.Margins.Right = 18;
+  pnlLogin.Margins.Top = 24;
+  KremPanel(pnlLogin);
+
+  lblLoginKartBaslik = frmLogin.AddNewProLabel(pnlLogin, 'lblLoginKartBaslik', 'Hoş geldiniz');
+  lblLoginKartBaslik.Align = alMostTop;
+  lblLoginKartBaslik.Height = 34;
+  lblLoginKartBaslik.Margins.Left = 16;
+  lblLoginKartBaslik.Margins.Right = 16;
+  lblLoginKartBaslik.Margins.Top = 20;
+  YaziAyar(lblLoginKartBaslik, '#2a2210', 18);
+  lblLoginKartBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblLoginKartBaslik.clProSettings.FontHorzAlign = palCenter;
+  lblLoginKartBaslik.SetclProSettings(lblLoginKartBaslik.clProSettings);
+
+  lblLoginKartAlt = frmLogin.AddNewProLabel(pnlLogin, 'lblLoginKartAlt', 'Hesabınıza giriş yapın');
+  lblLoginKartAlt.Align = alMostTop;
+  lblLoginKartAlt.Height = 28;
+  lblLoginKartAlt.Margins.Left = 16;
+  lblLoginKartAlt.Margins.Right = 16;
+  YaziAyar(lblLoginKartAlt, '#6b5a2e', 12);
+  lblLoginKartAlt.clProSettings.FontHorzAlign = palCenter;
+  lblLoginKartAlt.SetclProSettings(lblLoginKartAlt.clProSettings);
+
+  edtEmail = frmLogin.AddNewProEdit(pnlLogin, 'edtEmail', 'E-posta');
+  edtEmail.Align = alMostTop;
+  edtEmail.Height = 48;
+  edtEmail.Margins.Left = 16;
+  edtEmail.Margins.Right = 16;
+  edtEmail.Margins.Top = 16;
+  edtEmail.Text = '';
+  LoginEditAyar(edtEmail);
+
+  edtSifre = frmLogin.AddNewProEdit(pnlLogin, 'edtSifre', 'Şifre');
+  edtSifre.Align = alMostTop;
+  edtSifre.Password = True;
+  edtSifre.Height = 48;
+  edtSifre.Margins.Left = 16;
+  edtSifre.Margins.Right = 16;
+  edtSifre.Margins.Top = 10;
+  LoginEditAyar(edtSifre);
+
+  btnGiris = frmLogin.AddNewProButton(pnlLogin, 'btnGiris', 'Giriş yap');
+  btnGiris.Align = alMostTop;
+  btnGiris.Height = 50;
+  btnGiris.Margins.Left = 16;
+  btnGiris.Margins.Right = 16;
+  btnGiris.Margins.Top = 18;
+  AltinBtn(btnGiris);
+  frmLogin.AddNewEvent(btnGiris, tbeOnClick, 'GirisTikla');
+
+  frmLogin.Run;
+}

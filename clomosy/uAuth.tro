@@ -1,0 +1,40 @@
+uses uHttp;
+
+var
+  authBody: String;
+  authCevap: String;
+  authProfil: String;
+
+function FirebaseGiris(AEmail, ASifre: String): Boolean;
+{
+  Result = False;
+  authBody = '{"email":"' + AEmail + '","password":"' + ASifre + '","returnSecureToken":true}';
+  authCevap = HttpIstek(rmPOST, AuthLoginUrl, authBody, '');
+
+  if (LastHttpCode <> 200)
+    ShowMessage('Giris olmadi. Kod: ' + IntToStr(LastHttpCode) + ' ' + authCevap)
+  else
+  {
+    CfgYaz(3, JsonAl(authCevap, 'idToken'));
+    CfgYaz(4, JsonAl(authCevap, 'localId'));
+    if (CfgOku(3) == '')
+      ShowMessage('Token yok. Cevap: ' + authCevap)
+    else
+    {
+      authProfil = HttpIstek(rmGET, RtdbPath('users/' + CfgOku(4)), '', '');
+      CfgYaz(5, JsonAl(authProfil, 'companyId'));
+      CfgYaz(6, JsonAl(authProfil, 'role'));
+      CfgYaz(7, JsonAl(authProfil, 'firstName'));
+      Result = True;
+    }
+  }
+}
+
+void OturumKapat;
+{
+  CfgYaz(3, '');
+  CfgYaz(4, '');
+  CfgYaz(5, '');
+  CfgYaz(6, '');
+  CfgYaz(7, '');
+}

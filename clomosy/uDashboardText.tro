@@ -1,0 +1,44 @@
+function GenelBakisMetni(AGYorum: String; ANToplam, ANUyari, ANKayit: Integer): String;
+{
+  Result = 'Panel ozeti' + #13#10 + #13#10 +
+           '- Takip edilen KPI: ' + IntToStr(ANToplam) + #13#10 +
+           '- Bekleyen uyari: ' + IntToStr(ANUyari) + #13#10 +
+           '- Toplam veri kaydi: ' + IntToStr(ANKayit) + #13#10 + #13#10 +
+           'Yonetici notu' + #13#10 + #13#10 + AGYorum + #13#10 + #13#10 +
+           'Odak noktasi' + #13#10 + #13#10 +
+           'Bugun satis, operasyon ve uyari akislarini ayni ekrandan izleyebilirsin.';
+}
+
+function KpiYonetimiMetni(AMetin: String; ANSatis, ANFinans, ANOperasyon, ANIk, ANPazarlama, ANUretim, ANMusteri: Integer): String;
+{
+  Result = 'Bu ekranda sirkette aktif olarak takip edilen KPI tanimlarini goruyorsun.' + #13#10 + #13#10 +
+           'Kategori ozeti' + #13#10 + #13#10 +
+           '- Satis: ' + IntToStr(ANSatis) + #13#10 +
+           '- Finans: ' + IntToStr(ANFinans) + #13#10 +
+           '- Operasyon: ' + IntToStr(ANOperasyon) + #13#10 +
+           '- IK: ' + IntToStr(ANIk) + #13#10 +
+           '- Pazarlama: ' + IntToStr(ANPazarlama) + #13#10 +
+           '- Uretim: ' + IntToStr(ANUretim) + #13#10 +
+           '- Musteri: ' + IntToStr(ANMusteri) + #13#10 + #13#10 +
+           'Aktif KPI listesi' + #13#10 + #13#10 + AMetin;
+}
+
+function AnalizMetni(AMetin: String; ANKritik, ANRisk, ANInfo: Integer): String;
+{
+  Result = 'Bu alanda sistemin urettigi analiz yorumlari ve yonetsel notlar yer alir.' + #13#10 + #13#10 +
+           'Anlik durum' + #13#10 + #13#10 +
+           '- Kritik uyari: ' + IntToStr(ANKritik) + #13#10 +
+           '- Risk seviyesi: ' + IntToStr(ANRisk) + #13#10 +
+           '- Bilgi notu: ' + IntToStr(ANInfo) + #13#10 + #13#10 +
+           'Yorum akisi' + #13#10 + #13#10 + AMetin;
+}
+
+function UyariMetni(AMetin: String; ANKritik, ANRisk, ANInfo: Integer): String;
+{
+  Result = 'Bu alanda dikkat gerektiren uyari basliklari listelenir.' + #13#10 + #13#10 +
+           'Uyari dagilimi' + #13#10 + #13#10 +
+           '- Kritik: ' + IntToStr(ANKritik) + #13#10 +
+           '- Risk: ' + IntToStr(ANRisk) + #13#10 +
+           '- Bilgi: ' + IntToStr(ANInfo) + #13#10 + #13#10 +
+           'Acik basliklar' + #13#10 + #13#10 + AMetin;
+}

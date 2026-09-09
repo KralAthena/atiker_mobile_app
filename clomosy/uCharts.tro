@@ -1,0 +1,44 @@
+uses uHttp;
+
+var
+  kpiJson: String;
+  chartJson: String;
+  chartDurum: String;
+  adetSatis: Integer;
+  adetFinans: Integer;
+  adetOperasyon: Integer;
+  adetDiger: Integer;
+
+function ChartDurumYazi: String;
+{
+  Result = chartDurum;
+}
+
+function KpiChartJsonUret: String;
+{
+  kpiJson = HttpIstek(rmGET, RtdbPath('kpiDefinitions/' + CfgOku(5)), '', '');
+  adetSatis = 1;
+  adetFinans = 1;
+  adetOperasyon = 1;
+  adetDiger = 1;
+
+  if (Pos('sales', kpiJson) > 0)
+    adetSatis = 4;
+  if (Pos('finance', kpiJson) > 0)
+    adetFinans = 2;
+  if (Pos('operation', kpiJson) > 0)
+    adetOperasyon = 2;
+  if (Pos('hr', kpiJson) > 0)
+    adetDiger = 2;
+
+  if (LastHttpCode == 200)
+    chartDurum = 'KPI tanimlari RTDB uzerinden yuklendi.'
+  else
+    chartDurum = 'KPI okunamadi. Kod: ' + IntToStr(LastHttpCode);
+
+  chartJson = '[{"Ad":"Satis","Adet":' + IntToStr(adetSatis) + ',"color":"clGold"},';
+  chartJson = chartJson + '{"Ad":"Finans","Adet":' + IntToStr(adetFinans) + ',"color":"clOrange"},';
+  chartJson = chartJson + '{"Ad":"Operasyon","Adet":' + IntToStr(adetOperasyon) + ',"color":"clPeru"},';
+  chartJson = chartJson + '{"Ad":"Diger","Adet":' + IntToStr(adetDiger) + ',"color":"clTomato"}]';
+  Result = chartJson;
+}

@@ -1,0 +1,10 @@
+*.local.tro
+*.local.txt
+.env
+.env.*
+!.env.example
+secrets/
+key_vault/
+firebase-*.json
+google-services.json
+GoogleService-Info.plist

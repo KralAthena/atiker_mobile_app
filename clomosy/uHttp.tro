@@ -1,0 +1,324 @@
+var
+  HttpRest: TclRest;
+  LastHttpCode: Integer;
+  LastHttpBody: String;
+
+function CfgOku(AIndex: Integer): String;
+{
+  Result = Clomosy.GlobalVariableStringList.Strings[AIndex];
+}
+
+void CfgYaz(AIndex: Integer; AValue: String);
+{
+  Clomosy.GlobalVariableStringList.Strings[AIndex] = AValue;
+}
+
+void CfgHazirla(AAuth, ARtdb, AApi: String);
+{
+  try
+    Clomosy.GlobalVariableStringList.Clear;
+  except
+    LastHttpCode = 0;
+  }
+  Clomosy.GlobalVariableStringList.Add(AAuth);
+  Clomosy.GlobalVariableStringList.Add(ARtdb);
+  Clomosy.GlobalVariableStringList.Add(AApi);
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+  Clomosy.GlobalVariableStringList.Add('');
+}
+
+function HttpIstek(AMethod, AUrl, ABody: String): String;
+{
+  Result = '';
+  LastHttpCode = 0;
+  LastHttpBody = '';
+  HttpRest = TclRest.Create;
+  HttpRest.Accept = 'application/json';
+  HttpRest.ContentType = 'application/json';
+  HttpRest.ConnectTimeOut = 60000;
+  HttpRest.BaseURL = AUrl;
+  HttpRest.Method = AMethod;
+  if (ABody <> '')
+    HttpRest.AddBody(ABody, 'application/json');
+  HttpRest.Execute;
+  LastHttpBody = HttpRest.Response;
+  Result = LastHttpBody;
+}
+
+function JsonAl(AJson, AKey: String): String;
+{
+  Result = Clomosy.CLParseJSON(AJson, AKey);
+}
+
+function MetinSay(AMetin, AAra: String): Integer;
+var
+  n: Integer;
+  s: String;
+  p: Integer;
+{
+  n = 0;
+  s = AMetin;
+  p = Pos(AAra, s);
+  while (p > 0)
+  {
+    n = n + 1;
+    s = Copy(s, p + Length(AAra), 4000);
+    p = Pos(AAra, s);
+  }
+  Result = n;
+}
+
+function IlkAlan(AJson, AAlan: String): String;
+var
+  s: String;
+  anahtar: String;
+  p: Integer;
+  p2: Integer;
+{
+  Result = '';
+  anahtar = '"' + AAlan + '":"';
+  p = Pos(anahtar, AJson);
+  if (p > 0)
+  {
+    s = Copy(AJson, p + Length(anahtar), 400);
+    p2 = Pos('"', s);
+    if (p2 > 1)
+      Result = Copy(s, 1, p2 - 1);
+  }
+}
+
+function AlanListesi(AJson, AAlan: String): String;
+var
+  s: String;
+  anahtar: String;
+  sonuc: String;
+  isim: String;
+  p: Integer;
+  p2: Integer;
+{
+  sonuc = '';
+  s = AJson;
+  anahtar = '"' + AAlan + '":"';
+  p = Pos(anahtar, s);
+  while (p > 0)
+  {
+    s = Copy(s, p + Length(anahtar), 4000);
+    p2 = Pos('"', s);
+    if (p2 > 1)
+    {
+      isim = Copy(s, 1, p2 - 1);
+      if (sonuc == '')
+        sonuc = '- ' + isim
+      else
+        sonuc = sonuc + #13#10 + '- ' + isim;
+    }
+    p = Pos(anahtar, s);
+  }
+  Result = sonuc;
+}
+
+function RtdbGet(AYol: String): String;
+{
+  Result = HttpIstek(rmGET, CfgOku(1) + '/' + AYol + '.json?auth=' + CfgOku(3), '');
+}
+
+function KatSay(AJson, AKod: String): Integer;
+{
+  Result = MetinSay(AJson, '"category":"' + AKod + '"');
+}
+
+function ChartJsonUret(AKpi: String): String;
+var
+  nS: Integer;
+  nF: Integer;
+  nO: Integer;
+  nH: Integer;
+  nP: Integer;
+  nU: Integer;
+  nM: Integer;
+  j: String;
+{
+  nS = KatSay(AKpi, 'sales');
+  nF = KatSay(AKpi, 'finance');
+  nO = KatSay(AKpi, 'operations');
+  nH = KatSay(AKpi, 'hr');
+  nP = KatSay(AKpi, 'marketing');
+  nU = KatSay(AKpi, 'production');
+  nM = KatSay(AKpi, 'customer');
+  j = '[';
+  if (nS > 0)
+    j = j + '{"Ad":"Satis","Adet":' + IntToStr(nS) + ',"color":"clGold"}';
+  if (nF > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Finans","Adet":' + IntToStr(nF) + ',"color":"clOrange"}';
+  }
+  if (nO > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Operasyon","Adet":' + IntToStr(nO) + ',"color":"clPeru"}';
+  }
+  if (nH > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"IK","Adet":' + IntToStr(nH) + ',"color":"clTomato"}';
+  }
+  if (nP > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Pazarlama","Adet":' + IntToStr(nP) + ',"color":"clYellowGreen"}';
+  }
+  if (nU > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Uretim","Adet":' + IntToStr(nU) + ',"color":"clPurple"}';
+  }
+  if (nM > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Musteri","Adet":' + IntToStr(nM) + ',"color":"clPink"}';
+  }
+  j = j + ']';
+  if (j == '[]')
+    j = '[{"Ad":"KPI yok","Adet":0,"color":"clGold"}]';
+  Result = j;
+}
+
+void CanliCek;
+var
+  kpi: String;
+  analiz: String;
+  uyari: String;
+  kayit: String;
+  firma: String;
+  ad: String;
+  nKpi: Integer;
+  nUyari: Integer;
+  nKayit: Integer;
+  liste: String;
+{
+  firma = RtdbGet('companies/' + CfgOku(5));
+  ad = JsonAl(firma, 'name');
+  if (ad == '')
+    ad = CfgOku(5);
+  CfgYaz(8, ad);
+
+  kpi = RtdbGet('kpiDefinitions/' + CfgOku(5));
+  uyari = RtdbGet('alerts/' + CfgOku(5));
+  kayit = RtdbGet('kpiEntries/' + CfgOku(5));
+  analiz = RtdbGet('analysisResults/' + CfgOku(5));
+  CfgYaz(9, kpi);
+  CfgYaz(10, analiz);
+  CfgYaz(11, uyari);
+  CfgYaz(12, IlkAlan(analiz, 'executiveComment'));
+  CfgYaz(13, ChartJsonUret(kpi));
+
+  nKpi = MetinSay(kpi, '"name":"');
+  nUyari = MetinSay(uyari, '"title":"');
+  nKayit = MetinSay(kayit, '"period":"');
+  CfgYaz(14, IntToStr(nKpi) + ' KPI' + #13#10 + IntToStr(nUyari) + ' uyari' + #13#10 + IntToStr(nKayit) + ' kayit');
+
+  liste = AlanListesi(kpi, 'name');
+  if (liste == '')
+    liste = 'Canli KPI tanimi yok.';
+  CfgYaz(15, liste);
+
+  liste = AlanListesi(analiz, 'executiveComment');
+  if (liste == '')
+    liste = CfgOku(12);
+  if (liste == '')
+    liste = 'Canli analiz yok.';
+  CfgYaz(16, liste);
+
+  liste = AlanListesi(uyari, 'title');
+  if (liste == '')
+    liste = 'Acik uyari yok.';
+  CfgYaz(17, liste);
+}
+
+void BarGizle(AForm: TclForm);
+{
+  try
+    TclButton(AForm.clFindComponent('BtnGoBack')).Visible = False;
+    TclButton(AForm.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+    LastHttpCode = 0;
+  }
+}
+
+void AltinBtn(ABtn: TclProButton);
+{
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  ABtn.clProSettings.FontSize = 15;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 14;
+  ABtn.clProSettings.RoundWidth = 14;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.clProSettings.BorderWidth = 0;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void KremBtn(ABtn: TclProButton);
+{
+  ABtn.Align = alMostTop;
+  ABtn.Height = 46;
+  ABtn.Margins.Top = 8;
+  ABtn.Margins.Left = 12;
+  ABtn.Margins.Right = 12;
+  ABtn.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  ABtn.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  ABtn.clProSettings.FontSize = 14;
+  ABtn.clProSettings.FontHorzAlign = palCenter;
+  ABtn.clProSettings.FontVertAlign = palcenter;
+  ABtn.clProSettings.TextSettings.Font.Style = [fsBold];
+  ABtn.clProSettings.IsRound = True;
+  ABtn.clProSettings.RoundHeight = 12;
+  ABtn.clProSettings.RoundWidth = 12;
+  ABtn.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e0c88a');
+  ABtn.clProSettings.BorderWidth = 1;
+  ABtn.clProSettings.IsFill = True;
+  ABtn.SetclProSettings(ABtn.clProSettings);
+}
+
+void KremPanel(APnl: TclProPanel);
+{
+  APnl.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  APnl.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e0c88a');
+  APnl.clProSettings.BorderWidth = 1;
+  APnl.clProSettings.IsFill = True;
+  APnl.clProSettings.IsRound = True;
+  APnl.clProSettings.RoundHeight = 16;
+  APnl.clProSettings.RoundWidth = 16;
+  APnl.SetclProSettings(APnl.clProSettings);
+}
+
+void YaziAyar(ALbl: TclProLabel; ARenk: String; ABoy: Integer);
+{
+  ALbl.clProSettings.FontColor = clAlphaColor.clHexToColor(ARenk);
+  ALbl.clProSettings.FontSize = ABoy;
+  ALbl.clProSettings.WordWrap = True;
+  ALbl.SetclProSettings(ALbl.clProSettings);
+}

@@ -1,0 +1,100 @@
+void ChartDoldurEx(AChart: TclChart; ANSatis, ANFinans, ANOperasyon, ANIk, ANPazarlama, ANUretim, ANMusteri: Integer);
+var
+  chartJson: String;
+{
+  chartJson = '[';
+  if (ANSatis > 0)
+    chartJson = chartJson + '{"Ad":"Satis","Adet":' + IntToStr(ANSatis) + ',"color":"clGold"}';
+  if (ANFinans > 0)
+  {
+    if (chartJson <> '[')
+      chartJson = chartJson + ',';
+    chartJson = chartJson + '{"Ad":"Finans","Adet":' + IntToStr(ANFinans) + ',"color":"clOrange"}';
+  }
+  if (ANOperasyon > 0)
+  {
+    if (chartJson <> '[')
+      chartJson = chartJson + ',';
+    chartJson = chartJson + '{"Ad":"Operasyon","Adet":' + IntToStr(ANOperasyon) + ',"color":"clPeru"}';
+  }
+  if (ANIk > 0)
+  {
+    if (chartJson <> '[')
+      chartJson = chartJson + ',';
+    chartJson = chartJson + '{"Ad":"IK","Adet":' + IntToStr(ANIk) + ',"color":"clTomato"}';
+  }
+  if (ANPazarlama > 0)
+  {
+    if (chartJson <> '[')
+      chartJson = chartJson + ',';
+    chartJson = chartJson + '{"Ad":"Pazarlama","Adet":' + IntToStr(ANPazarlama) + ',"color":"clYellowGreen"}';
+  }
+  if (ANUretim > 0)
+  {
+    if (chartJson <> '[')
+      chartJson = chartJson + ',';
+    chartJson = chartJson + '{"Ad":"Uretim","Adet":' + IntToStr(ANUretim) + ',"color":"clPurple"}';
+  }
+  if (ANMusteri > 0)
+  {
+    if (chartJson <> '[')
+      chartJson = chartJson + ',';
+    chartJson = chartJson + '{"Ad":"Musteri","Adet":' + IntToStr(ANMusteri) + ',"color":"clPink"}';
+  }
+  chartJson = chartJson + ']';
+  if (chartJson == '[]')
+    chartJson = '[{"Ad":"KPI yok","Adet":0,"color":"clGold"}]';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'KPI';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'KPI dagilimi';
+  AChart.clLoadDataFromJSONStr(chartJson);
+}
+
+void PanelOzetChartDoldurEx(AChart: TclChart; ANToplam, ANUyari, ANKayit: Integer);
+var
+  j: String;
+{
+  j = '[';
+  j = j + '{"Ad":"KPI","Adet":' + IntToStr(ANToplam) + ',"color":"clGold"},';
+  j = j + '{"Ad":"Uyari","Adet":' + IntToStr(ANUyari) + ',"color":"clTomato"},';
+  j = j + '{"Ad":"Kayit","Adet":' + IntToStr(ANKayit) + ',"color":"clSkyBlue"}]';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'Panel';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'Panel ozeti';
+  AChart.clLoadDataFromJSONStr(j);
+}
+
+void UyariChartDoldurEx(AChart: TclChart; ANKritik, ANRisk, ANInfo: Integer);
+var
+  j: String;
+{
+  j = '[';
+  if (ANKritik > 0)
+    j = j + '{"Ad":"Kritik","Adet":' + IntToStr(ANKritik) + ',"color":"clTomato"}';
+  if (ANRisk > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Risk","Adet":' + IntToStr(ANRisk) + ',"color":"clOrange"}';
+  }
+  if (ANInfo > 0)
+  {
+    if (j <> '[')
+      j = j + ',';
+    j = j + '{"Ad":"Bilgi","Adet":' + IntToStr(ANInfo) + ',"color":"clSkyBlue"}';
+  }
+  if (j == '[')
+    j = '[{"Ad":"Temiz","Adet":1,"color":"clYellowGreen"}]'
+  else
+    j = j + ']';
+  AChart.Charttype = clCBar;
+  AChart.XAxisText = 'Ad';
+  AChart.ChartItemText = 'Uyari';
+  AChart.ChartItemsValue = 'Adet';
+  AChart.ChartTitle = 'Uyari dagilimi';
+  AChart.clLoadDataFromJSONStr(j);
+}

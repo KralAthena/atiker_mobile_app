@@ -1,0 +1,66 @@
+uses uHttp;
+
+var
+  frmAnaliz: TclForm;
+  lblBaslik: TclProLabel;
+  memoAnaliz: TclMemo;
+  btnGeri: TclProButton;
+
+void GeriDon;
+{
+  frmAnaliz.clHide;
+}
+
+{
+  frmAnaliz = TclForm.Create(Self);
+  frmAnaliz.SetFormColor('#faf4e4', '#f4ebd3', clGVertical);
+  frmAnaliz.clSetCaption('Analiz merkezi');
+
+  try
+    TclButton(frmAnaliz.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+    LastHttpCode = LastHttpCode;
+  }
+
+  lblBaslik = frmAnaliz.AddNewProLabel(frmAnaliz, 'lblBaslik', 'Analiz merkezi');
+  lblBaslik.Align = alMostTop;
+  lblBaslik.Height = 44;
+  lblBaslik.Margins.Left = 16;
+  lblBaslik.Margins.Top = 10;
+  lblBaslik.clProSettings.FontColor = clAlphaColor.clHexToColor('#c98a1b');
+  lblBaslik.clProSettings.FontSize = 22;
+  lblBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBaslik.SetclProSettings(lblBaslik.clProSettings);
+
+  btnGeri = frmAnaliz.AddNewProButton(frmAnaliz, 'btnGeri', 'Geri');
+  btnGeri.Align = alBottom;
+  btnGeri.Height = 48;
+  btnGeri.Margins.Left = 16;
+  btnGeri.Margins.Right = 16;
+  btnGeri.Margins.Bottom = 12;
+  btnGeri.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  btnGeri.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  btnGeri.clProSettings.FontSize = 15;
+  btnGeri.clProSettings.FontHorzAlign = palCenter;
+  btnGeri.clProSettings.FontVertAlign = palcenter;
+  btnGeri.clProSettings.TextSettings.Font.Style = [fsBold];
+  btnGeri.clProSettings.IsRound = True;
+  btnGeri.clProSettings.RoundHeight = 12;
+  btnGeri.clProSettings.RoundWidth = 12;
+  btnGeri.clProSettings.IsFill = True;
+  btnGeri.SetclProSettings(btnGeri.clProSettings);
+  frmAnaliz.AddNewEvent(btnGeri, tbeOnClick, 'GeriDon');
+
+  memoAnaliz = frmAnaliz.AddNewMemo(frmAnaliz, 'memoAnaliz', AnalizListeMetin);
+  memoAnaliz.Align = alClient;
+  memoAnaliz.ReadOnly = True;
+  memoAnaliz.Margins.Left = 14;
+  memoAnaliz.Margins.Right = 14;
+  memoAnaliz.Margins.Top = 8;
+  memoAnaliz.Margins.Bottom = 8;
+  memoAnaliz.StyledSettings = ssFamily;
+  memoAnaliz.TextSettings.Font.Size = 14;
+  memoAnaliz.TextSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+
+  frmAnaliz.Run;
+}

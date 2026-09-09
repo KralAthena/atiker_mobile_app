@@ -1,0 +1,90 @@
+uses uHttp;
+
+var
+  frmOzet: TclForm;
+  lblBaslik: TclProLabel;
+  lblFirma: TclProLabel;
+  pnlKart: TclProPanel;
+  lblKart: TclProLabel;
+  btnGeri: TclProButton;
+
+void GeriDon;
+{
+  frmOzet.clHide;
+}
+
+{
+  frmOzet = TclForm.Create(Self);
+  frmOzet.SetFormColor('#faf4e4', '#f4ebd3', clGVertical);
+  frmOzet.clSetCaption('Genel bakis');
+
+  try
+    TclButton(frmOzet.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+    LastHttpCode = LastHttpCode;
+  }
+
+  lblBaslik = frmOzet.AddNewProLabel(frmOzet, 'lblBaslik', 'Genel bakis');
+  lblBaslik.Align = alMostTop;
+  lblBaslik.Height = 44;
+  lblBaslik.Margins.Left = 16;
+  lblBaslik.Margins.Top = 10;
+  lblBaslik.clProSettings.FontColor = clAlphaColor.clHexToColor('#c98a1b');
+  lblBaslik.clProSettings.FontSize = 22;
+  lblBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBaslik.SetclProSettings(lblBaslik.clProSettings);
+
+  lblFirma = frmOzet.AddNewProLabel(frmOzet, 'lblFirma', CfgOku(8) + '  ·  ' + CfgOku(6));
+  lblFirma.Align = alMostTop;
+  lblFirma.Height = 24;
+  lblFirma.Margins.Left = 16;
+  lblFirma.clProSettings.FontColor = clAlphaColor.clHexToColor('#6b5a2e');
+  lblFirma.clProSettings.FontSize = 13;
+  lblFirma.SetclProSettings(lblFirma.clProSettings);
+
+  pnlKart = frmOzet.AddNewProPanel(frmOzet, 'pnlKart');
+  pnlKart.Align = alClient;
+  pnlKart.Margins.Left = 14;
+  pnlKart.Margins.Right = 14;
+  pnlKart.Margins.Top = 12;
+  pnlKart.Margins.Bottom = 70;
+  pnlKart.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#fff8ea');
+  pnlKart.clProSettings.BorderColor = clAlphaColor.clHexToColor('#e0c88a');
+  pnlKart.clProSettings.BorderWidth = 1;
+  pnlKart.clProSettings.IsFill = True;
+  pnlKart.clProSettings.IsRound = True;
+  pnlKart.clProSettings.RoundHeight = 16;
+  pnlKart.clProSettings.RoundWidth = 16;
+  pnlKart.SetclProSettings(pnlKart.clProSettings);
+
+  lblKart = frmOzet.AddNewProLabel(pnlKart, 'lblKart', OzetKartMetin);
+  lblKart.Align = alClient;
+  lblKart.Margins.Left = 16;
+  lblKart.Margins.Right = 16;
+  lblKart.Margins.Top = 14;
+  lblKart.clProSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+  lblKart.clProSettings.FontSize = 15;
+  lblKart.clProSettings.WordWrap = True;
+  lblKart.SetclProSettings(lblKart.clProSettings);
+
+  btnGeri = frmOzet.AddNewProButton(frmOzet, 'btnGeri', 'Geri');
+  btnGeri.Align = alBottom;
+  btnGeri.Height = 48;
+  btnGeri.Margins.Left = 16;
+  btnGeri.Margins.Right = 16;
+  btnGeri.Margins.Bottom = 12;
+  btnGeri.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  btnGeri.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  btnGeri.clProSettings.FontSize = 15;
+  btnGeri.clProSettings.FontHorzAlign = palCenter;
+  btnGeri.clProSettings.FontVertAlign = palcenter;
+  btnGeri.clProSettings.TextSettings.Font.Style = [fsBold];
+  btnGeri.clProSettings.IsRound = True;
+  btnGeri.clProSettings.RoundHeight = 12;
+  btnGeri.clProSettings.RoundWidth = 12;
+  btnGeri.clProSettings.IsFill = True;
+  btnGeri.SetclProSettings(btnGeri.clProSettings);
+  frmOzet.AddNewEvent(btnGeri, tbeOnClick, 'GeriDon');
+
+  frmOzet.Run;
+}

@@ -1,0 +1,66 @@
+uses uHttp;
+
+var
+  frmKpi: TclForm;
+  lblBaslik: TclProLabel;
+  memoKpi: TclMemo;
+  btnGeri: TclProButton;
+
+void GeriDon;
+{
+  frmKpi.clHide;
+}
+
+{
+  frmKpi = TclForm.Create(Self);
+  frmKpi.SetFormColor('#faf4e4', '#f4ebd3', clGVertical);
+  frmKpi.clSetCaption('KPI yonetimi');
+
+  try
+    TclButton(frmKpi.clFindComponent('BtnFormMenu')).Visible = False;
+  except
+    LastHttpCode = LastHttpCode;
+  }
+
+  lblBaslik = frmKpi.AddNewProLabel(frmKpi, 'lblBaslik', 'KPI tanimlari');
+  lblBaslik.Align = alMostTop;
+  lblBaslik.Height = 44;
+  lblBaslik.Margins.Left = 16;
+  lblBaslik.Margins.Top = 10;
+  lblBaslik.clProSettings.FontColor = clAlphaColor.clHexToColor('#c98a1b');
+  lblBaslik.clProSettings.FontSize = 22;
+  lblBaslik.clProSettings.TextSettings.Font.Style = [fsBold];
+  lblBaslik.SetclProSettings(lblBaslik.clProSettings);
+
+  btnGeri = frmKpi.AddNewProButton(frmKpi, 'btnGeri', 'Geri');
+  btnGeri.Align = alBottom;
+  btnGeri.Height = 48;
+  btnGeri.Margins.Left = 16;
+  btnGeri.Margins.Right = 16;
+  btnGeri.Margins.Bottom = 12;
+  btnGeri.clProSettings.BackgroundColor = clAlphaColor.clHexToColor('#c98a1b');
+  btnGeri.clProSettings.FontColor = clAlphaColor.clHexToColor('#faf4e4');
+  btnGeri.clProSettings.FontSize = 15;
+  btnGeri.clProSettings.FontHorzAlign = palCenter;
+  btnGeri.clProSettings.FontVertAlign = palcenter;
+  btnGeri.clProSettings.TextSettings.Font.Style = [fsBold];
+  btnGeri.clProSettings.IsRound = True;
+  btnGeri.clProSettings.RoundHeight = 12;
+  btnGeri.clProSettings.RoundWidth = 12;
+  btnGeri.clProSettings.IsFill = True;
+  btnGeri.SetclProSettings(btnGeri.clProSettings);
+  frmKpi.AddNewEvent(btnGeri, tbeOnClick, 'GeriDon');
+
+  memoKpi = frmKpi.AddNewMemo(frmKpi, 'memoKpi', KpiListeMetin);
+  memoKpi.Align = alClient;
+  memoKpi.ReadOnly = True;
+  memoKpi.Margins.Left = 14;
+  memoKpi.Margins.Right = 14;
+  memoKpi.Margins.Top = 8;
+  memoKpi.Margins.Bottom = 8;
+  memoKpi.StyledSettings = ssFamily;
+  memoKpi.TextSettings.Font.Size = 14;
+  memoKpi.TextSettings.FontColor = clAlphaColor.clHexToColor('#2a2210');
+
+  frmKpi.Run;
+}
